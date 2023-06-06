@@ -28,7 +28,7 @@ public class DBConnectionManager {
                 Class.forName(driverClassName);
                 connection = DriverManager.getConnection(url, username, password);
             } catch (IOException | ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
+                logger.error(e);
                 logger.error(e);
             }
         }
@@ -40,7 +40,7 @@ public class DBConnectionManager {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e);
             }
         }
     }

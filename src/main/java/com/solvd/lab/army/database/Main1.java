@@ -1,5 +1,9 @@
 package com.solvd.lab.army.database;
 
+import com.solvd.lab.army.dao.Impl.SoldierDAOImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -8,6 +12,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Main1 {
+    private static final Logger logger = LogManager.getLogger(Main1.class);
+
     public static void main(String[] args) {
         Connection connection = null;
         try {
@@ -24,16 +30,16 @@ public class Main1 {
             // Use the connection for database operations
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         } finally {
             if (connection != null) {
                 try {
                     System.out.print("Connect Success");
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    logger.error(e);
                 }
             }
         }

@@ -1,13 +1,13 @@
 package com.solvd.lab.army.service;
 
-import com.solvd.lab.army.daoImpl.RankDAOImpl;
-import com.solvd.lab.army.entity.Rank;
+import com.solvd.lab.army.dao.Impl.RankDAOImpl;
+import com.solvd.lab.army.model.Rank;
 
 import java.util.List;
 
 public abstract class RankServiceAbstract {
     protected abstract RankDAOImpl getRankDao();
-
+/*
     public Rank getRankById(int rankId) {
         return getRankDao().getRankById(rankId);
     }
@@ -30,5 +30,5 @@ public abstract class RankServiceAbstract {
 
     public  List<Rank> getRankWithRankTypes()  {
         return getRankDao().getRankWithRankTypes();
-    }
+    }*/
 }

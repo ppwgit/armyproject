@@ -1,7 +1,7 @@
 package com.solvd.lab.army.test;
 
 
-import com.solvd.lab.army.daoImpl.DAOClass;
+import com.solvd.lab.army.dao.DAOClass;
 
 public class TestDAOClass {
     public static void main(String[] args) {

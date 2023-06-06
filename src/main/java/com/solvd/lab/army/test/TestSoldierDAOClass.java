@@ -1,8 +1,8 @@
 package com.solvd.lab.army.test;
 
 
-import com.solvd.lab.army.daoImpl.SoldierDAOImpl;
-import com.solvd.lab.army.entity.Soldier;
+import com.solvd.lab.army.dao.Impl.SoldierDAOImpl;
+import com.solvd.lab.army.model.Soldier;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ public class TestSoldierDAOClass {
         System.out.println("Fetching data from the database...");
 
         // Test the getAll() method
-        List<Soldier> soldiers = dao.getAllSoldiers();
+        /*List<Soldier> soldiers = dao.getAllSoldiers();
         System.out.println("All Soldiers:");
         for (Soldier soldier : soldiers) {
             System.out.println(soldier.getId() + " " + soldier.getFirstName() + " " + soldier.getLastName() + " " + soldier.getDateOfBirth() + " " + soldier.getGender()
                     + " " + soldier.getContactNumber() + " " + soldier.getEmergencyNumber() + " " + soldier.getEmail() + " " + soldier.getAddress() + " " + soldier.getServiceStatus() + " " + soldier.getSoldierStatus());
 
-        }
+        }*/
 
       /*  // Test the getById(int id) method
         System.out.println("All Soldiers: getById");
