@@ -1,0 +1,62 @@
+<soldiers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="soldiers.xsd">
+    <soldier>
+        <id>1</id>
+        <firstName>Ava</firstName>
+        <lastName>SimpleLastname</lastName>
+        <dateOfBirth>1990-01-01</dateOfBirth>
+        <gender>Male</gender>
+        <contactNumber>1234567890</contactNumber>
+        <emergencyNumber>9876543210</emergencyNumber>
+        <email>abc@email.com</email>
+        <address>123 Main Street</address>
+        <rankId>1</rankId>
+        <roleId>2</roleId>
+        <baseId>3</baseId>
+        <serviceStatus>Active</serviceStatus>
+        <soldierStatus>On Duty</soldierStatus>
+        <rank>Private</rank>
+        <role>Infantry</role>
+        <base>Base 1</base>
+        <skills>
+            <skill>
+                <id>1</id>
+                <name>Combat</name>
+                <description>Combat AAA </description>
+            </skill>
+            <skill>
+                <id>2</id>
+                <name>First-Aid</name>
+                <description>First-Aid des </description>
+            </skill>
+        </skills>
+        <operations>
+            <operation>
+                <id>1</id>
+                <name>Search and Rescue</name>
+                <startDate>2025-12-11</startDate>
+                <endDate>2020-12-11</endDate>
+                <location>Bangkok</location>
+                <operationTypeId>1</operationTypeId>
+            </operation>
+            <operationType>
+                <id>1</id>
+                <name>Protect</name>
+            </operationType>
+        </operations>
+        <units>
+            <unit>
+                <id>1</id>
+                <name>Division</name>
+                <unitType>Infantry</unitType>
+                <soldierId>1</soldierId>
+            </unit>
+            <unit>
+                <id>1</id>
+                <name>Army</name>
+                <unitType>Infantry</unitType>
+                <soldierId>1</soldierId>
+            </unit>
+        </units>
+    </soldier>
+</soldiers>

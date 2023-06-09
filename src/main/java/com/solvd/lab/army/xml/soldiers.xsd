@@ -1,0 +1,88 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="soldiers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="soldier" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="id" type="xs:long"/>
+                            <xs:element name="firstName" type="xs:string"/>
+                            <xs:element name="lastName" type="xs:string"/>
+                            <xs:element name="dateOfBirth" type="xs:date"/>
+                            <xs:element name="gender" type="xs:string"/>
+                            <xs:element name="contactNumber" type="xs:string"/>
+                            <xs:element name="emergencyNumber" type="xs:string"/>
+                            <xs:element name="email" type="xs:string"/>
+                            <xs:element name="address" type="xs:string"/>
+                            <xs:element name="rankId" type="xs:long"/>
+                            <xs:element name="roleId" type="xs:long"/>
+                            <xs:element name="baseId" type="xs:long"/>
+                            <xs:element name="serviceStatus" type="xs:string"/>
+                            <xs:element name="soldierStatus" type="xs:string"/>
+                            <xs:element name="rank" type="xs:string"/>
+                            <xs:element name="role" type="xs:string"/>
+                            <xs:element name="base" type="xs:string"/>
+                            <xs:element name="skills">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="skill" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="id" type="xs:long"/>
+                                                    <xs:element name="name" type="xs:string"/>
+                                                    <xs:element name="description" type="xs:string"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="operations">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="operation" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="id" type="xs:long"/>
+                                                    <xs:element name="name" type="xs:string"/>
+                                                    <xs:element name="startDate" type="xs:date"/>
+                                                    <xs:element name="endDate" type="xs:date"/>
+                                                    <xs:element name="location" type="xs:string"/>
+                                                    <xs:element name="operationTypeId" type="xs:long"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="operationType" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="id" type="xs:long"/>
+                                                    <xs:element name="name" type="xs:string"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="units">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="unit" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="id" type="xs:long"/>
+                                                    <xs:element name="name" type="xs:string"/>
+                                                    <xs:element name="unitType" type="xs:string"/>
+                                                    <xs:element name="soldierId" type="xs:long"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
