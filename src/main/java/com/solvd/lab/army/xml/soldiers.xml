@@ -2,19 +2,19 @@
           xsi:noNamespaceSchemaLocation="soldiers.xsd">
     <soldier>
         <id>1</id>
-        <firstName>Ava</firstName>
+        <firstName>Aval</firstName>
         <lastName>SimpleLastname</lastName>
         <dateOfBirth>1990-01-01</dateOfBirth>
         <gender>Male</gender>
         <contactNumber>1234567890</contactNumber>
         <emergencyNumber>9876543210</emergencyNumber>
-        <email>abc@email.com</email>
+        <email>aval@email.com</email>
         <address>123 Main Street</address>
         <rankId>1</rankId>
         <roleId>2</roleId>
         <baseId>3</baseId>
         <serviceStatus>Active</serviceStatus>
-        <soldierStatus>On Duty</soldierStatus>
+        <soldierStatus>Alive</soldierStatus>
         <rank>Private</rank>
         <role>Infantry</role>
         <base>Base 1</base>
@@ -52,11 +52,74 @@
                 <soldierId>1</soldierId>
             </unit>
             <unit>
-                <id>1</id>
-                <name>Army</name>
-                <unitType>Infantry</unitType>
+                <id>4</id>
+                <name>Bravo Battalion</name>
+                <unitType>Battalion</unitType>
                 <soldierId>1</soldierId>
             </unit>
         </units>
     </soldier>
+    <!-- 2 -->
+
+    <soldier>
+        <id>2</id>
+        <firstName>Perfom</firstName>
+        <lastName>Handerson</lastName>
+        <dateOfBirth>1980-10-23</dateOfBirth>
+        <gender>Female</gender>
+        <contactNumber>0215475222</contactNumber>
+        <emergencyNumber>55555544545</emergencyNumber>
+        <email>perform@email.com</email>
+        <address>300 Rose Street ,Yamada,Japan</address>
+        <rankId>3</rankId>
+        <roleId>3</roleId>
+        <baseId>3</baseId>
+        <serviceStatus>Veteran</serviceStatus>
+        <soldierStatus>Disability</soldierStatus>
+        <rank>Private</rank>
+        <role>Infantry</role>
+        <base>Base 1</base>
+        <skills>
+            <skill>
+                <id>1</id>
+                <name>Combat</name>
+                <description>Combat AAA </description>
+            </skill>
+            <skill>
+                <id>2</id>
+                <name>First-Aid</name>
+                <description>First-Aid des </description>
+            </skill>
+        </skills>
+        <operations>
+            <operation>
+                <id>1</id>
+                <name>Search and Rescue</name>
+                <startDate>2025-12-11</startDate>
+                <endDate>2020-12-11</endDate>
+                <location>Tokyo</location>
+                <operationTypeId>1</operationTypeId>
+            </operation>
+            <operationType>
+                <id>1</id>
+                <name>Stability Operations</name>
+            </operationType>
+        </operations>
+        <units>
+            <unit>
+                <id>2</id>
+                <name>1st Brigade</name>
+                <unitType>Brigade</unitType>
+                <soldierId>2</soldierId>
+            </unit>
+            <unit>
+                <id>3</id>
+                <name>Alpha Company</name>
+                <unitType>Alpha</unitType>
+                <soldierId>1</soldierId>
+            </unit>
+        </units>
+    </soldier>
+
+    <!-- 2 -->
 </soldiers>
