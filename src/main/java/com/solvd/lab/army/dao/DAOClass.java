@@ -1,7 +1,6 @@
 package com.solvd.lab.army.dao;
 
-import com.solvd.lab.army.dao.Impl.SoldierDAOImpl;
-import com.solvd.lab.army.database.DBConnectionManager;
+import com.solvd.lab.army.utils.DBConnectionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

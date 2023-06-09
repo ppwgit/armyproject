@@ -60,6 +60,14 @@ public class Rank {
                 ", rankTypes=" + rankTypes +
                 '}';
     }
+
+    public RankType getRankType() {
+        return rankType;
+    }
+
+    public void setRankType(RankType rankType) {
+        this.rankType = rankType;
+    }
 }
 
 

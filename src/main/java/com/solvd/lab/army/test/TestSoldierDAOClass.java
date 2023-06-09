@@ -1,10 +1,7 @@
 package com.solvd.lab.army.test;
 
 
-import com.solvd.lab.army.dao.Impl.SoldierDAOImpl;
-import com.solvd.lab.army.model.Soldier;
-
-import java.util.List;
+import com.solvd.lab.army.dao.impl.SoldierDAOImpl;
 
 public class TestSoldierDAOClass {
     public static void main(String[] args) {

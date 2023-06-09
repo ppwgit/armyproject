@@ -7,7 +7,7 @@ public class State {
     private Long id;
     private String name;
     private Long countryId;
-    private Country county;
+    private Country country;
     private List<City> cities;
 
     public State() {
@@ -41,5 +41,11 @@ public class State {
     public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
+    public Country getCounty() {
+        return country;
+    }
 
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 }

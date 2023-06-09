@@ -27,8 +27,10 @@ public class Soldier {
     private Rank rank;
     private Role role;
     private Base base;
-    private List<SoldierSkill> soldierSkills;
-    private List<SoldierOperation> soldierOperations;
+   // private List<SoldierSkill> soldierSkills;
+   // private List<SoldierOperation> soldierOperations;
+   private List<Skill> skills;
+   private List<Operation> operations;
     private List<Unit> units;
 
     public Soldier() {
@@ -49,6 +51,13 @@ public class Soldier {
         this.baseId = baseId;
         this.serviceStatus = serviceStatus;
         this.soldierStatus= soldierStatus;
+        skills = new ArrayList<>();
+        operations = new ArrayList<>();
+        units = new ArrayList<>();
+        this.rank = rank;
+        this.role = role;
+        this.base = base;
+
     }
 
 
@@ -163,4 +172,48 @@ public class Soldier {
         this.soldierStatus = soldierStatus;
     }
 
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
+    }
+    public List<Unit> getUnits() {
+        return units;
+    }
+
+    public void setUnits(List<Unit> units) {
+        this.units = units;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    public Base getBase() {
+        return base;
+    }
+
+    public void setBase(Base base) {
+        this.base = base;
+    }
 }

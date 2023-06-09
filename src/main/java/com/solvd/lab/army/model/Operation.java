@@ -12,7 +12,7 @@ public class Operation {
     private String location;
     private Long operationTypeId;
     private OperationType operationType;
-    private List<SoldierOperation> soldierOperations;
+    //private List<SoldierOperation> soldierOperations;
 
     public Operation() {
 
@@ -25,6 +25,7 @@ public class Operation {
         this.endDate = endDate;
         this.location = location;
         this.operationTypeId = operationTypeId;
+        this.operationType = operationType;
     }
 
 
@@ -74,5 +75,11 @@ public class Operation {
     public void setOperationTypeId(Long operationTypeId) {
         this.operationTypeId = operationTypeId;
     }
+    public OperationType getOperationType() {
+        return operationType;
+    }
 
+    public void setOperationType(OperationType operationType) {
+        this.operationType = operationType;
+    }
 }

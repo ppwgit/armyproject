@@ -1,10 +1,7 @@
 package com.solvd.lab.army.utils;
 
-import com.solvd.lab.army.dao.Impl.SoldierDAOImpl;
-import com.solvd.lab.army.database.DBConnectionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -13,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
