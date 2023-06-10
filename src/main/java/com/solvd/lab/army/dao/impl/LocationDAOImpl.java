@@ -22,12 +22,9 @@ public class LocationDAOImpl implements ILocationDAO {
     private static final String INSERT_QUERY = "INSERT INTO state (id, address,city_id) VALUES (?, ?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public LocationDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Location getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -41,14 +38,17 @@ public class LocationDAOImpl implements ILocationDAO {
     @Override
     public Location getById(int id) {
         Location location = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 location = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -60,8 +60,10 @@ public class LocationDAOImpl implements ILocationDAO {
     @Override
     public List<Location> getAll() {
         List<Location> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -69,6 +71,7 @@ public class LocationDAOImpl implements ILocationDAO {
                 list.add(location);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -79,8 +82,10 @@ public class LocationDAOImpl implements ILocationDAO {
 
     @Override
     public void insert(Location location) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, location.getId());
             statement.setString(2, location.getAddress());
             statement.setLong(3, location.getCityId()); // Set the foreign key ID
@@ -95,8 +100,10 @@ public class LocationDAOImpl implements ILocationDAO {
 
     @Override
     public void update(Location location) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, location.getAddress());
             statement.setLong(2, location.getCityId()); // Update the foreign key ID
             statement.setLong(3, location.getId());
@@ -111,8 +118,10 @@ public class LocationDAOImpl implements ILocationDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

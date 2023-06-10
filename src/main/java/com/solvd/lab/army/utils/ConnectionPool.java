@@ -2,25 +2,29 @@ package com.solvd.lab.army.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
+
+    private static final int MAX_POOL_SIZE = 10;
+    private static final int INITIAL_POOL_SIZE = 5;
+
     private static ConnectionPool instance;
-    private List<Connection> connections;
-    private int maxPoolSize;
+    private BlockingQueue<Connection> pool;
 
     private ConnectionPool() {
-        connections = new ArrayList<>();
-        maxPoolSize = 10;
+        pool = new LinkedBlockingQueue<>(MAX_POOL_SIZE);
+        initializePool();
     }
 
     public static synchronized ConnectionPool getInstance() {
@@ -30,43 +34,28 @@ public class ConnectionPool {
         return instance;
     }
 
-    public synchronized Connection getConnection() {
-        while (connections.isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                logger.error(e);
-            }
+    public Connection getConnection() {
+        if (pool == null || pool.isEmpty()) {
+            initializePool();
         }
-
-        return connections.remove(connections.size() - 1);
+        return pool.poll();
     }
 
-    public synchronized void releaseConnection(Connection connection) {
-        if (connections.size() < maxPoolSize) {
-            connections.add(connection);
-        } else {
+    public void releaseConnection(Connection connection) {
+        if (connection != null) {
+            pool.offer(connection);
+        }
+    }
+
+    private void initializePool() {
+        for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
             try {
-                connection.close();
+                pool.offer(createConnection());
             } catch (SQLException e) {
                 logger.error(e);
+            } catch (IOException e) {
+                logger.error(e);
             }
-        }
-        notifyAll();
-    }
-
-    public synchronized void createConnections(int numConnections) {
-        if (connections.size() + numConnections <= maxPoolSize) {
-            for (int i = 0; i < numConnections; i++) {
-                try {
-                    Connection connection = createConnection();
-                    connections.add(connection);
-                } catch (SQLException | IOException e) {
-                    logger.error(e);
-                }
-            }
-        } else {
-            throw new IllegalArgumentException("Exceeded maximum pool size.");
         }
     }
 
@@ -89,3 +78,6 @@ public class ConnectionPool {
         return DriverManager.getConnection(url, username, password);
     }
 }
+
+
+

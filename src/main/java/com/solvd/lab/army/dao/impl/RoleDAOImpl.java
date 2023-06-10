@@ -19,12 +19,9 @@ public class RoleDAOImpl implements IRoleDAO {
     private static final String INSERT_QUERY = "INSERT INTO role (id, name) VALUES (?, ?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public RoleDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Role getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -37,14 +34,17 @@ public class RoleDAOImpl implements IRoleDAO {
     @Override
     public Role getById(int id) {
         Role role = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 role = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -56,8 +56,10 @@ public class RoleDAOImpl implements IRoleDAO {
     @Override
     public List<Role> getAll() {
         List<Role> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -65,6 +67,7 @@ public class RoleDAOImpl implements IRoleDAO {
                 list.add(role);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -75,8 +78,10 @@ public class RoleDAOImpl implements IRoleDAO {
 
     @Override
     public void insert(Role role) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, role.getId());
             statement.setString(2, role.getName());
             statement.executeUpdate();
@@ -90,8 +95,10 @@ public class RoleDAOImpl implements IRoleDAO {
 
     @Override
     public void update(Role role) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, role.getName());
             statement.setLong(2, role.getId());
             statement.executeUpdate();
@@ -105,8 +112,10 @@ public class RoleDAOImpl implements IRoleDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

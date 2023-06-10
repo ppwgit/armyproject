@@ -23,12 +23,9 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
 
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public EquipmentDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Equipment getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -45,14 +42,17 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
     @Override
     public Equipment getById(int id) {
         Equipment equipment = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 equipment = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -64,8 +64,10 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
     @Override
     public List<Equipment> getAll() {
         List<Equipment> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -73,6 +75,7 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
                 list.add(equipment);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -83,8 +86,10 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
 
     @Override
     public void insert(Equipment equipment) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, equipment.getId());
             statement.setString(2, equipment.getName());
             statement.setString(3, equipment.getManufacturer());
@@ -102,8 +107,10 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
 
     @Override
     public void update(Equipment equipment) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, equipment.getName());
             statement.setString(2, equipment.getManufacturer());
             statement.setString(3, equipment.getYearOfManufacture());
@@ -121,8 +128,10 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

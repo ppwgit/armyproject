@@ -22,12 +22,9 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
     private static final String INSERT_QUERY = "INSERT INTO operation_type (id, name) VALUES (?, ?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public OperationTypeDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private OperationType getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -40,14 +37,17 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
     @Override
     public OperationType getById(int id) {
         OperationType operationType = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 operationType = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -59,8 +59,10 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
     @Override
     public List<OperationType> getAll() {
         List<OperationType> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -68,6 +70,7 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
                 list.add(operationType);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -78,8 +81,10 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
 
     @Override
     public void insert(OperationType operationType) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, operationType.getId());
             statement.setString(2, operationType.getName());
             statement.executeUpdate();
@@ -93,8 +98,10 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
 
     @Override
     public void update(OperationType operationType) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, operationType.getName());
             statement.setLong(2, operationType.getId());
             statement.executeUpdate();
@@ -108,8 +115,10 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

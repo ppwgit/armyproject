@@ -22,12 +22,9 @@ public class StateDAOImpl implements IStateDAO {
     private static final String INSERT_QUERY = "INSERT INTO state (id, name,country_id) VALUES (?, ?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public StateDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private State getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -41,14 +38,17 @@ public class StateDAOImpl implements IStateDAO {
     @Override
     public State getById(int id) {
         State state = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 state = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -60,8 +60,10 @@ public class StateDAOImpl implements IStateDAO {
     @Override
     public List<State> getAll() {
         List<State> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -69,6 +71,7 @@ public class StateDAOImpl implements IStateDAO {
                 list.add(state);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -79,8 +82,10 @@ public class StateDAOImpl implements IStateDAO {
 
     @Override
     public void insert(State state) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, state.getId());
             statement.setString(2, state.getName());
             statement.setLong(3, state.getCountryId()); // Set the foreign key ID
@@ -95,8 +100,10 @@ public class StateDAOImpl implements IStateDAO {
 
     @Override
     public void update(State state) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, state.getName());
             statement.setLong(2, state.getCountryId()); // Update the foreign key ID
             statement.setLong(3, state.getId());
@@ -111,8 +118,10 @@ public class StateDAOImpl implements IStateDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
@@ -125,7 +134,9 @@ public class StateDAOImpl implements IStateDAO {
 
     public List<State> getStatesByCountryId(int countryId) {
         List<State> states = new ArrayList<>();
+        Connection connection = null;
         try {
+            connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM states WHERE country_id = ?");
             statement.setInt(1, countryId);
             ResultSet resultSet = statement.executeQuery();
@@ -135,6 +146,7 @@ public class StateDAOImpl implements IStateDAO {
                 states.add(state);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {

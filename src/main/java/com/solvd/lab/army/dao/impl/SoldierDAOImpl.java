@@ -20,12 +20,9 @@ public class SoldierDAOImpl implements ISoldierDAO {
     private static final String INSERT_QUERY = "INSERT INTO soldier (id, first_name , last_name , date_of_birth  , gender , contact_number , emergency_number , email , address , rankId , role_id , base_id , service_status ,soldier_status ) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public SoldierDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Soldier getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -51,14 +48,17 @@ public class SoldierDAOImpl implements ISoldierDAO {
     @Override
     public Soldier getById(int id) {
         Soldier soldier = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 soldier = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -70,8 +70,10 @@ public class SoldierDAOImpl implements ISoldierDAO {
     @Override
     public List<Soldier> getAll() {
         List<Soldier> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -79,6 +81,7 @@ public class SoldierDAOImpl implements ISoldierDAO {
                 list.add(soldier);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -89,8 +92,10 @@ public class SoldierDAOImpl implements ISoldierDAO {
 
     @Override
     public void insert(Soldier soldier) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, soldier.getId());
             statement.setString(2, soldier.getFirstName());
             statement.setString(3, soldier.getLastName());
@@ -118,9 +123,10 @@ public class SoldierDAOImpl implements ISoldierDAO {
 
     @Override
     public void update(Soldier soldier) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
-
+            connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, soldier.getFirstName());
             statement.setString(2, soldier.getLastName());
             statement.setString(3, soldier.getLastName());
@@ -147,8 +153,10 @@ public class SoldierDAOImpl implements ISoldierDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

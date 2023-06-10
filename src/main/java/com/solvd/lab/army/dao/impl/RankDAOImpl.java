@@ -19,12 +19,9 @@ public class RankDAOImpl implements IRankDAO {
     private static final String INSERT_QUERY = "INSERT INTO rank (id, name,rank_type_id) VALUES (?, ?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public RankDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Rank getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -38,14 +35,17 @@ public class RankDAOImpl implements IRankDAO {
     @Override
     public Rank getById(int id) {
         Rank rank = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 rank = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -57,8 +57,10 @@ public class RankDAOImpl implements IRankDAO {
     @Override
     public List<Rank> getAll() {
         List<Rank> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -66,6 +68,7 @@ public class RankDAOImpl implements IRankDAO {
                 list.add(rank);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -76,8 +79,10 @@ public class RankDAOImpl implements IRankDAO {
 
     @Override
     public void insert(Rank rank) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, rank.getId());
             statement.setString(2, rank.getName());
             statement.setLong(3, rank.getRankTypeId()); // Set the foreign key ID
@@ -92,8 +97,10 @@ public class RankDAOImpl implements IRankDAO {
 
     @Override
     public void update(Rank rank) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, rank.getName());
             statement.setLong(2, rank.getRankTypeId()); // Update the foreign key ID
             statement.setLong(3, rank.getId());
@@ -108,8 +115,10 @@ public class RankDAOImpl implements IRankDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
@@ -120,7 +129,4 @@ public class RankDAOImpl implements IRankDAO {
         }
     }
 
-    public Rank getByRankTypeId(int rankTypeId) {
-        return null;
-    }
 }

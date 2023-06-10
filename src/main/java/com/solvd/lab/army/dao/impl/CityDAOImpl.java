@@ -22,12 +22,9 @@ public class CityDAOImpl implements ICityDAO {
     private static final String INSERT_QUERY = "INSERT INTO city (id, name,zip_code,state_id) VALUES (?, ?,?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public CityDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private City getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -42,14 +39,18 @@ public class CityDAOImpl implements ICityDAO {
     @Override
     public City getById(int id) {
         City city = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 city = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -61,8 +62,10 @@ public class CityDAOImpl implements ICityDAO {
     @Override
     public List<City> getAll() {
         List<City> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -70,6 +73,7 @@ public class CityDAOImpl implements ICityDAO {
                 list.add(city);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -80,8 +84,10 @@ public class CityDAOImpl implements ICityDAO {
 
     @Override
     public void insert(City city) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, city.getId());
             statement.setString(2, city.getName());
             statement.setString(3, city.getZipCode());
@@ -97,8 +103,10 @@ public class CityDAOImpl implements ICityDAO {
 
     @Override
     public void update(City city) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, city.getName());
             statement.setString(2, city.getZipCode());
             statement.setLong(3, city.getStateId()); // Set the foreign key ID
@@ -114,8 +122,10 @@ public class CityDAOImpl implements ICityDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

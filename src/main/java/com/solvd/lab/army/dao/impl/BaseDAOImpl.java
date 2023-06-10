@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseDAOImpl implements IBaseDAO {
+public class BaseDAOImpl implements IBaseDAO  {
     private static final Logger logger = LogManager.getLogger(BaseDAOImpl.class);
     private static final String UPDATE_QUERY = "UPDATE base SET name = ?, geography = ?, location_id = ? ,contact_number = ?, email = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM base WHERE id = ?";
@@ -22,12 +22,9 @@ public class BaseDAOImpl implements IBaseDAO {
     private static final String INSERT_QUERY = "INSERT INTO base(id, name,geography,location_id,contact_number,email) VALUES (?, ?,?,?,?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public BaseDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Base getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -44,14 +41,17 @@ public class BaseDAOImpl implements IBaseDAO {
     @Override
     public Base getById(int id) {
         Base base = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 base = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -63,8 +63,10 @@ public class BaseDAOImpl implements IBaseDAO {
     @Override
     public List<Base> getAll() {
         List<Base> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement  statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -72,6 +74,7 @@ public class BaseDAOImpl implements IBaseDAO {
                 list.add(base);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -82,8 +85,10 @@ public class BaseDAOImpl implements IBaseDAO {
 
     @Override
     public void insert(Base base) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, base.getId());
             statement.setString(2, base.getName());
             statement.setString(3, base.getGeography());
@@ -102,8 +107,10 @@ public class BaseDAOImpl implements IBaseDAO {
 
     @Override
     public void update(Base base) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, base.getName());
             statement.setString(2, base.getGeography());
             statement.setString(3, base.getContactNumber());
@@ -121,8 +128,10 @@ public class BaseDAOImpl implements IBaseDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

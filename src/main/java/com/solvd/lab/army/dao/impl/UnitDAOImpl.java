@@ -22,12 +22,9 @@ public class UnitDAOImpl implements IUnitDAO {
     private static final String INSERT_QUERY = "INSERT INTO unit (id, name,unit_type,soldier_id) VALUES (?, ?,?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public UnitDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Unit getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -42,14 +39,17 @@ public class UnitDAOImpl implements IUnitDAO {
     @Override
     public Unit getById(int id) {
         Unit unit = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 unit = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -61,8 +61,10 @@ public class UnitDAOImpl implements IUnitDAO {
     @Override
     public List<Unit> getAll() {
         List<Unit> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -70,6 +72,7 @@ public class UnitDAOImpl implements IUnitDAO {
                 list.add(unit);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -80,8 +83,10 @@ public class UnitDAOImpl implements IUnitDAO {
 
     @Override
     public void insert(Unit unit) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, unit.getId());
             statement.setString(2, unit.getName());
             statement.setString(3, unit.getUnitType());
@@ -97,8 +102,10 @@ public class UnitDAOImpl implements IUnitDAO {
 
     @Override
     public void update(Unit unit) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, unit.getName());
             statement.setString(2, unit.getUnitType());
             statement.setLong(3, unit.getSoldierId()); // Set the foreign key ID
@@ -114,8 +121,10 @@ public class UnitDAOImpl implements IUnitDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();

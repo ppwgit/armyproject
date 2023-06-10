@@ -20,12 +20,9 @@ public class SkillDAOImpl implements ISkillDAO {
     private static final String INSERT_QUERY = "INSERT INTO skill (id, name,description) VALUES (?, ?,?)";
 
     private ConnectionPool connectionPool;
-    private Connection connection;
-    private PreparedStatement statement;
 
     public SkillDAOImpl() {
         connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
     }
 
     private Skill getDataFromResultSet(ResultSet resultSet) throws SQLException {
@@ -38,14 +35,17 @@ public class SkillDAOImpl implements ISkillDAO {
     @Override
     public Skill getById(int id) {
         Skill skill = null;
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 skill = getDataFromResultSet(resultSet);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -57,8 +57,10 @@ public class SkillDAOImpl implements ISkillDAO {
     @Override
     public List<Skill> getAll() {
         List<Skill> list = new ArrayList<>();
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -66,6 +68,7 @@ public class SkillDAOImpl implements ISkillDAO {
                 list.add(skill);
             }
             resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
@@ -76,8 +79,10 @@ public class SkillDAOImpl implements ISkillDAO {
 
     @Override
     public void insert(Skill skill) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, skill.getId());
             statement.setString(2, skill.getName());
             statement.setString(3, skill.getDescription());
@@ -92,8 +97,10 @@ public class SkillDAOImpl implements ISkillDAO {
 
     @Override
     public void update(Skill skill) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, skill.getName());
             statement.setString(2, skill.getDescription());
             statement.setLong(3, skill.getId());
@@ -108,8 +115,10 @@ public class SkillDAOImpl implements ISkillDAO {
 
     @Override
     public void delete(int id) {
+        Connection connection = null;
         try {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
