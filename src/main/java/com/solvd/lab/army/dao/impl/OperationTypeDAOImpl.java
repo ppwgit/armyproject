@@ -6,6 +6,7 @@ import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,14 +36,16 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
 
 
     @Override
-    public OperationType getById(int id) {
+    public OperationType getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         OperationType operationType = null;
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 operationType = getDataFromResultSet(resultSet);
             }
@@ -51,19 +54,23 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return operationType;
     }
 
     @Override
-    public List<OperationType> getAll() {
+    public List<OperationType> getAll() throws SQLException {
         List<OperationType> list = new ArrayList<>();
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
-            ResultSet resultSet = statement.executeQuery();
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 OperationType operationType = getDataFromResultSet(resultSet);
@@ -71,20 +78,23 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
             }
             resultSet.close();
             statement.close();
-        } catch (SQLException e) {
+        } catch (SQLException | InterruptedException | IOException | ClassNotFoundException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return list;
     }
 
     @Override
-    public void insert(OperationType operationType) {
+    public void insert(OperationType operationType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, operationType.getId());
             statement.setString(2, operationType.getName());
             statement.executeUpdate();
@@ -92,16 +102,18 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void update(OperationType operationType) {
+    public void update(OperationType operationType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, operationType.getName());
             statement.setLong(2, operationType.getId());
             statement.executeUpdate();
@@ -109,22 +121,25 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }

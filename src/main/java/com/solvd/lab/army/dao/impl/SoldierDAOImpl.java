@@ -6,6 +6,7 @@ import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,14 +47,16 @@ public class SoldierDAOImpl implements ISoldierDAO {
 
 
     @Override
-    public Soldier getById(int id) {
+    public Soldier getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Soldier soldier = null;
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 soldier = getDataFromResultSet(resultSet);
             }
@@ -62,19 +65,23 @@ public class SoldierDAOImpl implements ISoldierDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return soldier;
     }
 
     @Override
-    public List<Soldier> getAll() {
+    public List<Soldier> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         List<Soldier> list = new ArrayList<>();
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
-            ResultSet resultSet = statement.executeQuery();
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Soldier soldier = getDataFromResultSet(resultSet);
@@ -85,17 +92,20 @@ public class SoldierDAOImpl implements ISoldierDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return list;
     }
 
     @Override
-    public void insert(Soldier soldier) {
+    public void insert(Soldier soldier) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, soldier.getId());
             statement.setString(2, soldier.getFirstName());
             statement.setString(3, soldier.getLastName());
@@ -117,16 +127,18 @@ public class SoldierDAOImpl implements ISoldierDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void update(Soldier soldier) {
+    public void update(Soldier soldier) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, soldier.getFirstName());
             statement.setString(2, soldier.getLastName());
             statement.setString(3, soldier.getLastName());
@@ -147,22 +159,25 @@ public class SoldierDAOImpl implements ISoldierDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }

@@ -6,6 +6,7 @@ import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +34,16 @@ public class RankDAOImpl implements IRankDAO {
 
 
     @Override
-    public Rank getById(int id) {
+    public Rank getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Rank rank = null;
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 rank = getDataFromResultSet(resultSet);
             }
@@ -49,19 +52,23 @@ public class RankDAOImpl implements IRankDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return rank;
     }
 
     @Override
-    public List<Rank> getAll() {
+    public List<Rank> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         List<Rank> list = new ArrayList<>();
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
-            ResultSet resultSet = statement.executeQuery();
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Rank rank = getDataFromResultSet(resultSet);
@@ -72,17 +79,20 @@ public class RankDAOImpl implements IRankDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return list;
     }
 
     @Override
-    public void insert(Rank rank) {
+    public void insert(Rank rank) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, rank.getId());
             statement.setString(2, rank.getName());
             statement.setLong(3, rank.getRankTypeId()); // Set the foreign key ID
@@ -91,16 +101,18 @@ public class RankDAOImpl implements IRankDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void update(Rank rank) {
+    public void update(Rank rank) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, rank.getName());
             statement.setLong(2, rank.getRankTypeId()); // Update the foreign key ID
             statement.setLong(3, rank.getId());
@@ -109,22 +121,25 @@ public class RankDAOImpl implements IRankDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }

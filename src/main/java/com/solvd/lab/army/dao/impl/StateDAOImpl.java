@@ -6,6 +6,7 @@ import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,14 +37,16 @@ public class StateDAOImpl implements IStateDAO {
 
 
     @Override
-    public State getById(int id) {
+    public State getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         State state = null;
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 state = getDataFromResultSet(resultSet);
             }
@@ -52,19 +55,23 @@ public class StateDAOImpl implements IStateDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return state;
     }
 
     @Override
-    public List<State> getAll() {
+    public List<State> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         List<State> list = new ArrayList<>();
         Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
-            ResultSet resultSet = statement.executeQuery();
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 State state = getDataFromResultSet(resultSet);
@@ -75,17 +82,20 @@ public class StateDAOImpl implements IStateDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return list;
     }
 
     @Override
-    public void insert(State state) {
+    public void insert(State state) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, state.getId());
             statement.setString(2, state.getName());
             statement.setLong(3, state.getCountryId()); // Set the foreign key ID
@@ -94,16 +104,18 @@ public class StateDAOImpl implements IStateDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void update(State state) {
+    public void update(State state) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, state.getName());
             statement.setLong(2, state.getCountryId()); // Update the foreign key ID
             statement.setLong(3, state.getId());
@@ -112,34 +124,39 @@ public class StateDAOImpl implements IStateDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
-    public List<State> getStatesByCountryId(int countryId) {
+    public List<State> getStatesByCountryId(int countryId) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         List<State> states = new ArrayList<>();
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM states WHERE country_id = ?");
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement("SELECT * FROM states WHERE country_id = ?");
             statement.setInt(1, countryId);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 State state = getDataFromResultSet(resultSet);
@@ -150,6 +167,8 @@ public class StateDAOImpl implements IStateDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return states;

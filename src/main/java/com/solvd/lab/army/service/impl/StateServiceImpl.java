@@ -9,6 +9,7 @@ import com.solvd.lab.army.model.Country;
 import com.solvd.lab.army.model.State;
 import com.solvd.lab.army.service.IService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,30 +19,30 @@ public class StateServiceImpl implements IService<State> {
 
 
     @Override
-    public State getById(int id)  throws SQLException  {
+    public State getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         State state = stateDAO.getById(id);
         state.setCountry(countryDAO.getById(id));
         return state;
     }
 
     @Override
-    public List<State> getAll() throws SQLException{
+    public List<State> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         return stateDAO.getAll();
     }
 
     @Override
-    public void insert(State state) throws SQLException{
+    public void insert(State state) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         stateDAO.insert(state);
     }
 
     @Override
-    public void update(State state) throws SQLException{
+    public void update(State state) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         stateDAO.update(state);
 
     }
 
     @Override
-    public void delete(int id) throws SQLException{
+    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         stateDAO.delete(id);
     }
 }

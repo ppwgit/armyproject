@@ -1,8 +1,5 @@
 package com.solvd.lab.army.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -12,72 +9,47 @@ import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
 public class ConnectionPool {
-    private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
-
-    private static final int MAX_POOL_SIZE = 10;
-    private static final int INITIAL_POOL_SIZE = 5;
-
     private static ConnectionPool instance;
-    private BlockingQueue<Connection> pool;
+    private static int POOL_SIZE = 5;
+    private final BlockingQueue<Connection> connectionsQue;
 
-    private ConnectionPool() {
-        pool = new LinkedBlockingQueue<>(MAX_POOL_SIZE);
-        initializePool();
+    private ConnectionPool(int POOL_SIZE) {
+        this.POOL_SIZE = POOL_SIZE;
+        this.connectionsQue = new LinkedBlockingQueue<>(POOL_SIZE);
     }
 
-    public static synchronized ConnectionPool getInstance() {
+    // what is best way to use between synchronized (ConnectionPool.class) and  public static synchronized?
+    public synchronized static ConnectionPool getInstance() {
         if (instance == null) {
-            instance = new ConnectionPool();
+                    instance = new ConnectionPool(POOL_SIZE);
         }
         return instance;
     }
 
-    public Connection getConnection() {
-        if (pool == null || pool.isEmpty()) {
-            initializePool();
+    public synchronized Connection getConnection() throws InterruptedException, IOException, SQLException, IOException, SQLException, ClassNotFoundException {
+        Connection connection = connectionsQue.poll();
+        if (connection == null) {
+            if (connectionsQue.size() < POOL_SIZE) {
+                Class.forName("com.mysql.jdbc.Driver");
+                Properties properties = new Properties();
+                InputStream input = ConnectionPool.class.getClassLoader().getResourceAsStream("database.properties");
+                properties.load(input);
+
+                String url = properties.getProperty("db.url");
+                String username = properties.getProperty("db.username");
+                String password = properties.getProperty("db.password");
+                connection = DriverManager.getConnection(url, username, password);
+            } else {
+                connection = connectionsQue.take();
+            }
         }
-        return pool.poll();
+        return connection;
     }
 
     public void releaseConnection(Connection connection) {
         if (connection != null) {
-            pool.offer(connection);
+            connectionsQue.offer(connection);
         }
-    }
-
-    private void initializePool() {
-        for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            try {
-                pool.offer(createConnection());
-            } catch (SQLException e) {
-                logger.error(e);
-            } catch (IOException e) {
-                logger.error(e);
-            }
-        }
-    }
-
-    private Connection createConnection() throws SQLException, IOException {
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            logger.error(e);
-        }
-
-        Properties properties = new Properties();
-        InputStream inputStream = ConnectionPool.class.getClassLoader().getResourceAsStream("database.properties");
-        properties.load(inputStream);
-
-        String url = properties.getProperty("db.url");
-        String username = properties.getProperty("db.username");
-        String password = properties.getProperty("db.password");
-
-        return DriverManager.getConnection(url, username, password);
     }
 }
-
-
-

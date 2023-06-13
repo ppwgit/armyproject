@@ -6,6 +6,7 @@ import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,14 +36,16 @@ public class CountryDAOImpl implements ICountryDAO {
 
 
     @Override
-    public Country getById(int id) {
+    public Country getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Country country = null;
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 country = getDataFromResultSet(resultSet);
             }
@@ -51,19 +54,23 @@ public class CountryDAOImpl implements ICountryDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return country;
     }
 
     @Override
-    public List<Country> getAll() {
+    public List<Country> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         List<Country> list = new ArrayList<>();
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY);
-            ResultSet resultSet = statement.executeQuery();
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_ALL_QUERY);
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Country country = getDataFromResultSet(resultSet);
@@ -74,17 +81,20 @@ public class CountryDAOImpl implements ICountryDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return list;
     }
 
     @Override
-    public void insert(Country country) {
+    public void insert(Country country) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(INSERT_QUERY);
             statement.setLong(1, country.getId());
             statement.setString(2, country.getName());
             statement.executeUpdate();
@@ -92,16 +102,18 @@ public class CountryDAOImpl implements ICountryDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void update(Country country) {
+    public void update(Country country) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, country.getName());
             statement.setLong(2, country.getId());
             statement.executeUpdate();
@@ -109,33 +121,38 @@ public class CountryDAOImpl implements ICountryDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(DELETE_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
     }
-    public Country findStatebyCountryId(int id) {
+    public Country findStatebyCountryId(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Country country = null;
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         try {
-            connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 country = getDataFromResultSet(resultSet);
             }
@@ -144,6 +161,8 @@ public class CountryDAOImpl implements ICountryDAO {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
+            resultSet.close();
+            statement.close();
             connectionPool.releaseConnection(connection);
         }
         return country;
