@@ -1,15 +1,35 @@
 package com.solvd.lab.army.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Equipment {
     private Long id;
+
+    @XmlElement(name = "name")
     private String name;
+
+    @XmlElement(name = "manufacturer")
     private String manufacturer;
+
+    @XmlElement(name = "yearOfManufacture")
     private String yearOfManufacture;
+
+    @XmlElement(name = "quantity")
     private Long quantity;
+
+    @XmlElement(name = "equipmentTypeId")
     private Long equipmentTypeId;
+
+    @XmlElementWrapper(name = "equipmentBases")
+    @XmlElement(name = "equipmentBase")
     private List<EquipmentBase> equipmentBases;
+
+    @XmlElement(name = "equipmentType")
     private EquipmentType equipmentType;
 
     public Equipment() {

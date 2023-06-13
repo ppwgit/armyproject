@@ -1,36 +1,80 @@
 package com.solvd.lab.army.model;
 
+import com.solvd.lab.army.utils.DateAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@XmlRootElement(name = "soldiers")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Soldier {
     private static final Logger logger = LogManager.getLogger(Soldier.class);
 
     private Long id;
+
+    @XmlElement(name = "firstName")
     private String firstName;
+
+    @XmlElement(name = "lastName")
     private String lastName;
+
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date dateOfBirth;
+
+    @XmlElement(name = "gender")
     private String gender;
+
+    @XmlElement(name = "contactNumber")
     private String contactNumber;
+
+    @XmlElement(name = "emergencyNumber")
     private String emergencyNumber;
+
+    @XmlElement(name = "email")
     private String email;
+
+    @XmlElement(name = "address")
     private String address;
+
+    @XmlElement(name = "rankId")
     private Long rankId;
+
+    @XmlElement(name = "roleId")
     private Long roleId;
+
+    @XmlElement(name = "baseId")
     private Long baseId;
+
+    @XmlElement(name = "serviceStatus")
     private String serviceStatus;
+
+    @XmlElement(name = "soldierStatus")
     private String soldierStatus;
+
+    @XmlElement(name = "rank")
     private Rank rank;
+
+    @XmlElement(name = "role")
     private Role role;
+
+    @XmlElement(name = "base")
     private Base base;
-   // private List<SoldierSkill> soldierSkills;
-   // private List<SoldierOperation> soldierOperations;
+
+   @XmlElementWrapper(name = "skills")
+   @XmlElement(name = "skill")
    private List<Skill> skills;
-   private List<Operation> operations;
+
+    @XmlElementWrapper(name = "operations")
+    @XmlElement(name = "operation")
+    private List<Operation> operations;
+
+    @XmlElementWrapper(name = "units")
+    @XmlElement(name = "unit")
     private List<Unit> units;
 
     public Soldier() {
@@ -59,8 +103,6 @@ public class Soldier {
         this.base = base;
 
     }
-
-
     public Long getId() {
         return id;
     }

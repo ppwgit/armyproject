@@ -1,11 +1,23 @@
 package com.solvd.lab.army.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Skill {
     private Long id;
+
+    @XmlElement(name = "name")
     private String name;
+
+    @XmlElement(name = "description")
     private String description;
+
+    @XmlElementWrapper(name = "soldierSkills")
+    @XmlElement(name = "soldierSkill")
     private List<SoldierSkill> soldierSkills;
 
     public Skill() {

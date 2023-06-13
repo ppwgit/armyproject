@@ -1,13 +1,27 @@
 package com.solvd.lab.army.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Rank {
     private Long id;
+
+    @XmlElement(name = "name")
     private String name;
+
+    @XmlElement(name = "rankTypeId")
     private Long rankTypeId;
+
+    @XmlElement(name = "rankType")
     private RankType rankType;
+
+    @XmlElementWrapper(name = "rankTypes")
+    @XmlElement(name = "rankType")
     private List<RankType> rankTypes;
 
     public Rank() {

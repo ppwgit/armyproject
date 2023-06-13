@@ -1,16 +1,36 @@
 package com.solvd.lab.army.model;
 
+import com.solvd.lab.army.utils.DateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Operation {
 
     private Long id;
+
+    @XmlElement(name = "name")
     private String name;
+
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date startDate;
+
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date endDate;
+
+    @XmlElement(name = "location")
     private String location;
+
+    @XmlElement(name = "operationTypeId")
     private Long operationTypeId;
+
+    @XmlElement(name = "operationType")
     private OperationType operationType;
     //private List<SoldierOperation> soldierOperations;
 

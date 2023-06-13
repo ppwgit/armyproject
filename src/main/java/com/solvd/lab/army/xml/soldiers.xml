@@ -1,125 +1,79 @@
-<soldiers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="soldiers.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<soldiers>
     <soldier>
         <id>1</id>
-        <firstName>Aval</firstName>
-        <lastName>SimpleLastname</lastName>
+        <firstName>John</firstName>
+        <lastName>Doe</lastName>
         <dateOfBirth>1990-01-01</dateOfBirth>
         <gender>Male</gender>
         <contactNumber>1234567890</contactNumber>
         <emergencyNumber>9876543210</emergencyNumber>
-        <email>aval@email.com</email>
+        <email>johndoe@example.com</email>
         <address>123 Main Street</address>
         <rankId>1</rankId>
-        <roleId>2</roleId>
-        <baseId>3</baseId>
+        <roleId>1</roleId>
+        <baseId>1</baseId>
         <serviceStatus>Active</serviceStatus>
-        <soldierStatus>Alive</soldierStatus>
-        <rank>Private</rank>
-        <role>Infantry</role>
-        <base>Base 1</base>
+        <soldierStatus>Active</soldierStatus>
+        <rank>
+            <id>1</id>
+            <name>Private</name>
+        </rank>
+        <role>
+            <id>1</id>
+            <name>Role Name</name>
+        </role>
+        <base>
+            <id>1</id>
+            <name>Base Name</name>
+            <geography>Geography</geography>
+            <locationId>1</locationId>
+            <contactNumber>1234567890</contactNumber>
+            <email>base@example.com</email>
+        </base>
         <skills>
             <skill>
                 <id>1</id>
-                <name>Combat</name>
-                <description>Combat AAA </description>
+                <name>Skill Name 1</name>
+                <description>Skill Description 1</description>
             </skill>
             <skill>
                 <id>2</id>
-                <name>First-Aid</name>
-                <description>First-Aid des </description>
+                <name>Skill Name 2</name>
+                <description>Skill Description 2</description>
             </skill>
         </skills>
         <operations>
             <operation>
                 <id>1</id>
-                <name>Search and Rescue</name>
-                <startDate>2025-12-11</startDate>
-                <endDate>2020-12-11</endDate>
-                <location>Bangkok</location>
+                <name>Operation 1</name>
+                <startDate>2023-01-01</startDate>
+                <endDate>2023-01-10</endDate>
+                <location>Operation Location 1</location>
                 <operationTypeId>1</operationTypeId>
             </operation>
-            <operationType>
-                <id>1</id>
-                <name>Protect</name>
-            </operationType>
-        </operations>
-        <units>
-            <unit>
-                <id>1</id>
-                <name>Division</name>
-                <unitType>Infantry</unitType>
-                <soldierId>1</soldierId>
-            </unit>
-            <unit>
-                <id>4</id>
-                <name>Bravo Battalion</name>
-                <unitType>Battalion</unitType>
-                <soldierId>1</soldierId>
-            </unit>
-        </units>
-    </soldier>
-    <!-- 2 -->
-
-    <soldier>
-        <id>2</id>
-        <firstName>Perfom</firstName>
-        <lastName>Handerson</lastName>
-        <dateOfBirth>1980-10-23</dateOfBirth>
-        <gender>Female</gender>
-        <contactNumber>0215475222</contactNumber>
-        <emergencyNumber>55555544545</emergencyNumber>
-        <email>perform@email.com</email>
-        <address>300 Rose Street ,Yamada,Japan</address>
-        <rankId>3</rankId>
-        <roleId>3</roleId>
-        <baseId>3</baseId>
-        <serviceStatus>Veteran</serviceStatus>
-        <soldierStatus>Disability</soldierStatus>
-        <rank>Private</rank>
-        <role>Infantry</role>
-        <base>Base 1</base>
-        <skills>
-            <skill>
-                <id>1</id>
-                <name>Combat</name>
-                <description>Combat AAA </description>
-            </skill>
-            <skill>
-                <id>2</id>
-                <name>First-Aid</name>
-                <description>First-Aid des </description>
-            </skill>
-        </skills>
-        <operations>
             <operation>
-                <id>1</id>
-                <name>Search and Rescue</name>
-                <startDate>2025-12-11</startDate>
-                <endDate>2020-12-11</endDate>
-                <location>Tokyo</location>
-                <operationTypeId>1</operationTypeId>
+                <id>2</id>
+                <name>Operation 2</name>
+                <startDate>2023-02-01</startDate>
+                <endDate>2023-02-10</endDate>
+                <location>Operation Location 2</location>
+                <operationTypeId>2</operationTypeId>
             </operation>
-            <operationType>
-                <id>1</id>
-                <name>Stability Operations</name>
-            </operationType>
         </operations>
         <units>
             <unit>
-                <id>2</id>
-                <name>1st Brigade</name>
-                <unitType>Brigade</unitType>
-                <soldierId>2</soldierId>
+                <id>1</id>
+                <name>Unit 1</name>
+                <unitType>Unit Type 1</unitType>
+                <soldierId>1</soldierId>
             </unit>
             <unit>
-                <id>3</id>
-                <name>Alpha Company</name>
-                <unitType>Alpha</unitType>
+                <id>2</id>
+                <name>Unit 2</name>
+                <unitType>Unit Type 2</unitType>
                 <soldierId>1</soldierId>
             </unit>
         </units>
     </soldier>
-
-    <!-- 2 -->
 </soldiers>

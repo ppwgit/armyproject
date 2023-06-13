@@ -1,10 +1,23 @@
 package com.solvd.lab.army.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Unit{
         private Long id;
+
+        @XmlElement(name = "name")
         private String name;
+
+        @XmlElement(name = "unitType")
         private String unitType;
+
+        @XmlElement(name = "soldierId")
         private Long soldierId;
+
+        @XmlElement(name = "soldier")
         private Soldier soldier;
 
         public Unit() {

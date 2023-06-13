@@ -19,9 +19,34 @@
                             <xs:element name="baseId" type="xs:long"/>
                             <xs:element name="serviceStatus" type="xs:string"/>
                             <xs:element name="soldierStatus" type="xs:string"/>
-                            <xs:element name="rank" type="xs:string"/>
-                            <xs:element name="role" type="xs:string"/>
-                            <xs:element name="base" type="xs:string"/>
+                            <xs:element name="rank">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="id" type="xs:long"/>
+                                        <xs:element name="name" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="role">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="id" type="xs:long"/>
+                                        <xs:element name="name" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="base">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="id" type="xs:long"/>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="geography" type="xs:string"/>
+                                        <xs:element name="locationId" type="xs:long"/>
+                                        <xs:element name="contactNumber" type="xs:string"/>
+                                        <xs:element name="email" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                             <xs:element name="skills">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -49,14 +74,6 @@
                                                     <xs:element name="endDate" type="xs:date"/>
                                                     <xs:element name="location" type="xs:string"/>
                                                     <xs:element name="operationTypeId" type="xs:long"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="operationType" maxOccurs="unbounded">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="id" type="xs:long"/>
-                                                    <xs:element name="name" type="xs:string"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>

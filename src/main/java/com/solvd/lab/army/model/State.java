@@ -1,13 +1,27 @@
 package com.solvd.lab.army.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class State {
 
     private Long id;
+
+    @XmlElement(name = "name")
     private String name;
+
+    @XmlElement(name = "countryId")
     private Long countryId;
+
+    @XmlElement(name = "country")
     private Country country;
+
+    @XmlElementWrapper(name = "cities")
+    @XmlElement(name = "city")
     private List<City> cities;
 
     public State() {

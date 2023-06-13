@@ -68,7 +68,7 @@ public class ConnectionPool {
         }
 
         Properties properties = new Properties();
-        InputStream inputStream = DBConnectionManager.class.getClassLoader().getResourceAsStream("database.properties");
+        InputStream inputStream = ConnectionPool.class.getClassLoader().getResourceAsStream("database.properties");
         properties.load(inputStream);
 
         String url = properties.getProperty("db.url");
