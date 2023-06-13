@@ -1,0 +1,12 @@
+[ERROR] 2023-06-10 17:43:24.165 [main] JAXBParser - javax.xml.bind.JAXBException: Implementation of JAXB-API has not been found on module path or classpath.
+ - with linked exception:
+[java.lang.ClassNotFoundException: com.sun.xml.internal.bind.v2.ContextFactory]
+[ERROR] 2023-06-10 17:46:49.613 [main] JAXBParser - javax.xml.bind.JAXBException: Implementation of JAXB-API has not been found on module path or classpath.
+ - with linked exception:
+[java.lang.ClassNotFoundException: com.sun.xml.internal.bind.v2.ContextFactory]
+[ERROR] 2023-06-10 17:49:35.511 [main] JAXBParser - javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"soldiers"). Expected elements are (none)
+[ERROR] 2023-06-10 17:59:01.852 [main] JAXBParser - javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"soldiers"). Expected elements are (none)
+[ERROR] 2023-06-10 18:03:13.035 [main] JAXBParser - javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"soldiers"). Expected elements are (none)
+[ERROR] 2023-06-10 18:06:58.685 [main] TestJAXBParser - javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"soldiers"). Expected elements are (none)
+[ERROR] 2023-06-10 18:08:28.334 [main] TestJAXBParser - javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"soldiers"). Expected elements are (none)
+[ERROR] 2023-06-10 18:13:52.009 [main] JAXBParser - javax.xml.bind.UnmarshalException: unexpected element (uri:"", local:"soldiers"). Expected elements are (none)

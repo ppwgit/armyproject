@@ -1,0 +1,168 @@
+{
+  "soldiers": [
+    {
+      "id": 1,
+      "firstName": "Papaya",
+      "lastName": "Slad",
+      "dateOfBirth": "2003-05-01",
+      "gender": "Male",
+      "contactNumber": "1234567890",
+      "emergencyNumber": "9876543210",
+      "email": "papaya@gmail.com",
+      "address": "201 bloack B,AA road",
+      "rankId": 1,
+      "roleId": 1,
+      "baseId": 1,
+      "serviceStatus": "Disability",
+      "soldierStatus": "Veteran",
+      "rank": {
+        "id": 1,
+        "name": "Private(E1)"
+      },
+      "role": {
+        "id": 1,
+        "name": "Infantryman"
+      },
+      "base": {
+        "id": 1,
+        "name": "Fort XYZ",
+        "geography": "Domestic",
+        "locationId": 1,
+        "contactNumber": "1234567890",
+        "email": "baseXYZ@base.com"
+      },
+      "skills": {
+        "skill": [
+          {
+            "id": 1,
+            "name": "Marksmanship",
+            "description": "Proficiency in handling and accurately firing various firearms, including rifles, pistols, and machine guns."
+          },
+          {
+            "id": 2,
+            "name": "Combat Training",
+            "description": "Combat Training Description"
+          }
+        ]
+      },
+      "operations": {
+        "operation": [
+          {
+            "id": 1,
+            "name": "Operation 1",
+            "startDate": "2020-01-01",
+            "endDate": "2021-01-10",
+            "location": "Operation Location 1",
+            "operationTypeId": 1
+          },
+          {
+            "id": 2,
+            "name": "Operation 2",
+            "startDate": "2022-02-01",
+            "endDate": "2023-02-10",
+            "location": "Operation Location 2",
+            "operationTypeId": 2
+          }
+        ]
+      },
+      "units": {
+        "unit": [
+          {
+            "id": 1,
+            "name": "1st Division",
+            "unitType": "Division",
+            "soldierId": 1
+          },
+          {
+            "id": 2,
+            "name": "1st Brigade",
+            "unitType": "Brigade",
+            "soldierId": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "firstName": "Olivia",
+      "lastName": "Young",
+      "dateOfBirth": "1992-05-15",
+      "gender": "Female",
+      "contactNumber": "9876543210",
+      "emergencyNumber": "1234567890",
+      "email": "oliviay@gamil.com",
+      "address": "200 Star Road,USA",
+      "rankId": 2,
+      "roleId": 2,
+      "baseId": 2,
+      "serviceStatus": "Active Duty",
+      "soldierStatus": "Alive",
+      "rank": {
+        "id": 2,
+        "name": "Private First Class(E2)"
+      },
+      "role": {
+        "id": 2,
+        "name": "Combat Medic"
+      },
+      "base": {
+        "id": 2,
+        "name": "ABC Base",
+        "geography": "Domestic",
+        "locationId": 2,
+        "contactNumber": "9876543210",
+        "email": "base2@base.com"
+      },
+      "skills": {
+        "skill": [
+          {
+            "id": 3,
+            "name": "SFirst Aid and Medical Skills",
+            "description": "First Aid and Medical Skills Description"
+          },
+          {
+            "id": 4,
+            "name": "Leadership",
+            "description": "Leadership Description"
+          }
+        ]
+      },
+      "operations": {
+        "operation": [
+          {
+            "id": 3,
+            "name": "Operation AWE",
+            "startDate": "2019-03-01",
+            "endDate": "2019-03-10",
+            "location": "Dubai",
+            "operationTypeId": 3
+          },
+          {
+            "id": 4,
+            "name": "Operation DAV",
+            "startDate": "2020-04-01",
+            "endDate": "2020-04-10",
+            "location": "Mexico",
+            "operationTypeId": 4
+          }
+        ]
+      },
+      "units": {
+        "unit": [
+          {
+            "id": 3,
+            "name": "Alpha Company",
+            "unitType": "Company",
+            "soldierId": 2
+          },
+          {
+            "id": 4,
+            "name": "Bravo Battalion",
+            "unitType": "Battalion",
+            "soldierId": 2
+          }
+        ]
+      }
+    }
+  ]
+}
