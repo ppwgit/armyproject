@@ -2,20 +2,25 @@ package com.solvd.lab.army.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.solvd.lab.army.dao.impl.SoldierDAOImpl;
 import com.solvd.lab.army.modelJson.OperationJson;
 import com.solvd.lab.army.modelJson.SkillJson;
 import com.solvd.lab.army.modelJson.SoldierJson;
 import com.solvd.lab.army.modelJson.UnitJson;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 public class JsonParser {
+    private static final Logger logger = LogManager.getLogger(JsonParser.class);
+
     ObjectMapper objectMapper = new ObjectMapper();
     String jsonfilepath = "C:/Users/ppw/solvdlab/army/src/main/java/com/solvd/lab/army/xml/soldiers.xml";
 
-    File jsonFile = new File("jsonfilepath");
+    File jsonFile = new File(jsonfilepath);
     SoldierJson soldiers;
 
     {
@@ -50,7 +55,7 @@ public class JsonParser {
 
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 }
