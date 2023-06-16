@@ -59,11 +59,17 @@ public class Soldier {
     @XmlElement(name = "rank")
     private Rank rank;
 
+    private String rankName;
+
     @XmlElement(name = "role")
     private Role role;
 
+    private String roleName;
+
     @XmlElement(name = "base")
     private Base base;
+
+    private String baseName;
 
    @XmlElementWrapper(name = "skills")
    @XmlElement(name = "skill")
@@ -258,4 +264,30 @@ public class Soldier {
     public void setBase(Base base) {
         this.base = base;
     }
+
+
+    public String getRankName() {
+        return rankName;
+    }
+
+    public void setRankName(String rankName) {
+        this.rankName = rankName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getBaseName() {
+        return baseName;
+    }
+
+    public void setBaseName(String baseName) {
+        this.baseName = baseName;
+    }
+
 }

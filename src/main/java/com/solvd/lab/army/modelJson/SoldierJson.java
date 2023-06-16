@@ -84,6 +84,9 @@ public class SoldierJson {
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<UnitJson> units;
 
+    @JsonProperty("soldiers")
+    private List<SoldierJson> soldiers;
+
     public SoldierJson() {
     }
 
@@ -260,5 +263,38 @@ public class SoldierJson {
 
     public void setBase(BaseJson base) {
         this.base = base;
+    }
+
+    public List<SoldierJson> getSoldiers() {
+        return soldiers;
+    }
+
+    public void setSoldiers(List<SoldierJson> soldiers) {
+        this.soldiers = soldiers;
+    }
+    public String toString() {
+        return "SoldierJson{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender='" + gender + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", emergencyNumber='" + emergencyNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", rankId=" + rankId +
+                ", roleId=" + roleId +
+                ", baseId=" + baseId +
+                ", serviceStatus='" + serviceStatus + '\'' +
+                ", soldierStatus='" + soldierStatus + '\'' +
+                ", rank=" + rank +
+                ", role=" + role +
+                ", base=" + base +
+                ", skills=" + skills +
+                ", operations=" + operations +
+                ", units=" + units +
+                ", soldiers=" + soldiers +
+                '}';
     }
 }

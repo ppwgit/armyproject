@@ -38,6 +38,12 @@ public class RankJson {
         this.name = name;
     }
 
+    public String toString() {
+        return "RankJson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
 
 

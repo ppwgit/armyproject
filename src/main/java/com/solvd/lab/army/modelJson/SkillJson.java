@@ -16,6 +16,11 @@ public class SkillJson {
     @JsonProperty("description")
     private String description;
 
+    @JsonProperty("skills")
+    private List<SkillJson> skills;
+
+
+
     public SkillJson() {
 
     }
@@ -44,8 +49,22 @@ public class SkillJson {
     public String getDescription() {
         return description;
     }
+    public List<SkillJson> getSkill() {
+        return skills;
+    }
 
+    public void setSkill(List<SkillJson> skills) {
+        this.skills = skills;
+    }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String toString() {
+        return "SKillJson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", skills='" + skills + '\'' +
+                '}';
     }
 }

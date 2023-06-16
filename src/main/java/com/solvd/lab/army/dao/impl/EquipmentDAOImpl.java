@@ -41,7 +41,7 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
 
 
     @Override
-    public Equipment getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Equipment getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Equipment equipment = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -49,7 +49,7 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 equipment = getDataFromResultSet(resultSet);
@@ -140,7 +140,7 @@ public class EquipmentDAOImpl implements IEquipmentDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {

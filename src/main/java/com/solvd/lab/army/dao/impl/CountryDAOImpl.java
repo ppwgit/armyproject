@@ -36,7 +36,7 @@ public class CountryDAOImpl implements ICountryDAO {
 
 
     @Override
-    public Country getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Country getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Country country = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -44,7 +44,7 @@ public class CountryDAOImpl implements ICountryDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 country = getDataFromResultSet(resultSet);
@@ -127,7 +127,7 @@ public class CountryDAOImpl implements ICountryDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -143,7 +143,7 @@ public class CountryDAOImpl implements ICountryDAO {
             connectionPool.releaseConnection(connection);
         }
     }
-    public Country findStatebyCountryId(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Country findStatebyCountryId(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Country country = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -151,7 +151,7 @@ public class CountryDAOImpl implements ICountryDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 country = getDataFromResultSet(resultSet);

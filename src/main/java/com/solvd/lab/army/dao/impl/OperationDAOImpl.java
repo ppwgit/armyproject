@@ -2,6 +2,7 @@ package com.solvd.lab.army.dao.impl;
 
 import com.solvd.lab.army.dao.IOperationDAO;
 import com.solvd.lab.army.model.Operation;
+import com.solvd.lab.army.model.Skill;
 import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,10 @@ public class OperationDAOImpl implements  IOperationDAO{
     private static final String SELECT_ALL_QUERY = "SELECT * FROM operation";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM operation WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO operation (id, name,start_date,end_date,location,operation_type_id) VALUES (?, ?,?,?,?,?)";
+    private static final String SELECT_SOLDIER_OPERATIONS = "SELECT sk.id, sk.name, sk.start_date, sk.end_date, sk.location, sk.operation_type_id \n" +
+            "FROM mydb.soldier AS s\n" +
+            "JOIN mydb.soldier_operation AS b ON s.id = b.soldier_operation_id\n" +
+            "JOIN mydb.operation AS sk ON b.operation_id = sk.id where s.id =?";
 
     private ConnectionPool connectionPool;
 
@@ -39,7 +44,7 @@ public class OperationDAOImpl implements  IOperationDAO{
 
 
     @Override
-    public Operation getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Operation getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Operation operation = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -47,7 +52,7 @@ public class OperationDAOImpl implements  IOperationDAO{
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 operation = getDataFromResultSet(resultSet);
@@ -139,7 +144,7 @@ public class OperationDAOImpl implements  IOperationDAO{
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -154,5 +159,31 @@ public class OperationDAOImpl implements  IOperationDAO{
             statement.close();
             connectionPool.releaseConnection(connection);
         }
+    }
+
+    public List<Operation> findOperationsBySoldierId(long soldierId) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        List<Operation> operations = new ArrayList<>();
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_SOLDIER_OPERATIONS);
+            statement.setLong(1, soldierId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Operation operation = getDataFromResultSet(resultSet);
+                operations.add(operation);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            resultSet.close();
+            statement.close();
+            connectionPool.releaseConnection(connection);
+        }
+        return operations;
     }
 }

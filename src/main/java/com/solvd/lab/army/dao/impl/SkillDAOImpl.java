@@ -19,6 +19,7 @@ public class SkillDAOImpl implements ISkillDAO {
     private static final String SELECT_ALL_QUERY = "SELECT * FROM skill";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM skill WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO skill (id, name,description) VALUES (?, ?,?)";
+    private static final String SELECT_SOLDIER_SKILLS = "SELECT sk.id,sk.name FROM mydb.soldier AS s JOIN mydb.soldier_skill AS b ON s.id = b.soldier_skill_id JOIN mydb.skill AS sk ON b.skill_id = sk.id where s.id = ?";
 
     private ConnectionPool connectionPool;
 
@@ -34,7 +35,7 @@ public class SkillDAOImpl implements ISkillDAO {
     }
 
     @Override
-    public Skill getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Skill getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Skill skill = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -42,7 +43,7 @@ public class SkillDAOImpl implements ISkillDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 skill = getDataFromResultSet(resultSet);
@@ -127,7 +128,7 @@ public class SkillDAOImpl implements ISkillDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -143,4 +144,30 @@ public class SkillDAOImpl implements ISkillDAO {
             connectionPool.releaseConnection(connection);
         }
     }
+    public List<Skill> findSkillsBySoldierId(long soldierId) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        List<Skill> skills = new ArrayList<>();
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_SOLDIER_SKILLS);
+            statement.setLong(1, soldierId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Skill skill = getDataFromResultSet(resultSet);
+                skills.add(skill);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            resultSet.close();
+            statement.close();
+            connectionPool.releaseConnection(connection);
+        }
+        return skills;
+    }
+
 }

@@ -3,6 +3,8 @@ package com.solvd.lab.army.modelJson;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.solvd.lab.army.model.Soldier;
 
+import java.util.List;
+
 public class UnitJson {
         @JsonProperty("id")
         private Long id;
@@ -15,6 +17,9 @@ public class UnitJson {
 
         @JsonProperty("soldierId")
         private Long soldierId;
+
+        @JsonProperty("units")
+        private List<UnitJson> units;
 
         public UnitJson() {
 
@@ -58,4 +63,22 @@ public class UnitJson {
         public void setSoldierId(Long soldierId) {
             this.soldierId = soldierId;
         }
+
+       public List<UnitJson> getUnit() {
+        return units;
+       }
+
+       public void setUnit(List<UnitJson> units) {
+        this.units = units;
+      }
+        public String toString() {
+        return "UnitJson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", unitType='" + unitType + '\'' +
+                ", soldierId=" + soldierId + '\'' +
+                ", units=" + units + '\'' +
+                '}';
+    }
+
 }

@@ -24,10 +24,9 @@ public class JAXBParser {
                 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
 
-                Soldier soldiers = (Soldier) jaxbUnmarshaller.unmarshal(xmlFile);
-                List<Soldier> soldierList = new ArrayList<>();
-                for (Soldier soldier : soldierList) {
-
+                //Soldier soldiers = (Soldier) jaxbUnmarshaller.unmarshal(xmlFile);
+               List<Soldier> soldiers = (List<Soldier>) jaxbUnmarshaller.unmarshal(xmlFile);
+                for (Soldier soldier : soldiers) {
                     long id = soldier.getId();
                     String firstName = soldier.getFirstName();
                     String lastName = soldier.getLastName();

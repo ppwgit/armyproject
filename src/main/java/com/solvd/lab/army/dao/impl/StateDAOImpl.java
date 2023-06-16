@@ -37,7 +37,7 @@ public class StateDAOImpl implements IStateDAO {
 
 
     @Override
-    public State getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public State getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         State state = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -45,7 +45,7 @@ public class StateDAOImpl implements IStateDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 state = getDataFromResultSet(resultSet);
@@ -130,7 +130,7 @@ public class StateDAOImpl implements IStateDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -155,7 +155,7 @@ public class StateDAOImpl implements IStateDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement("SELECT * FROM states WHERE country_id = ?");
-            statement.setInt(1, countryId);
+            statement.setLong(1, countryId);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

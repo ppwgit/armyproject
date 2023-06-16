@@ -34,7 +34,7 @@ public class RankDAOImpl implements IRankDAO {
 
 
     @Override
-    public Rank getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Rank getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Rank rank = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -42,7 +42,7 @@ public class RankDAOImpl implements IRankDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 rank = getDataFromResultSet(resultSet);
@@ -127,7 +127,7 @@ public class RankDAOImpl implements IRankDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {

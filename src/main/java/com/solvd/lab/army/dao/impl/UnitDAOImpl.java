@@ -1,6 +1,7 @@
 package com.solvd.lab.army.dao.impl;
 
 import com.solvd.lab.army.dao.IUnitDAO;
+import com.solvd.lab.army.model.Operation;
 import com.solvd.lab.army.model.Unit;
 import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,7 @@ public class UnitDAOImpl implements IUnitDAO {
     private static final String SELECT_ALL_QUERY = "SELECT * FROM unit";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM unit WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO unit (id, name,unit_type,soldier_id) VALUES (?, ?,?,?)";
+    private static final String SELECT_SOLDIER_UNITS = " SELECT u.* FROM mydb.unit AS u JOIN mydb.soldier AS s ON u.soldier_id = s.id WHERE soldier_id = ? ";
 
     private ConnectionPool connectionPool;
 
@@ -33,12 +35,12 @@ public class UnitDAOImpl implements IUnitDAO {
         String name = resultSet.getString("name");
         String unitType = resultSet.getString("unit_type");
         long soldierId = resultSet.getLong("soldier_id");
-        return new Unit(id, name,unitType,soldierId);
+        return new Unit(id, name, unitType, soldierId);
     }
 
 
     @Override
-    public Unit getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Unit getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Unit unit = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -46,7 +48,7 @@ public class UnitDAOImpl implements IUnitDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 unit = getDataFromResultSet(resultSet);
@@ -133,7 +135,7 @@ public class UnitDAOImpl implements IUnitDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -149,4 +151,30 @@ public class UnitDAOImpl implements IUnitDAO {
             connectionPool.releaseConnection(connection);
         }
     }
+
+    public List<Unit> findUnitsBySoldierId(long soldierId) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        List<Unit> units = new ArrayList<>();
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_SOLDIER_UNITS);
+            statement.setLong(1, soldierId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Unit unit = getDataFromResultSet(resultSet);
+                units.add(unit);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            resultSet.close();
+            statement.close();
+            connectionPool.releaseConnection(connection);
+        }
+        return units;
+}
 }

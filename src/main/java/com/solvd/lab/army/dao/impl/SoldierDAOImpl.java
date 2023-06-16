@@ -19,6 +19,9 @@ public class SoldierDAOImpl implements ISoldierDAO {
     private static final String SELECT_ALL_QUERY = "SELECT * FROM soldier";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM soldier WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO soldier (id, first_name , last_name , date_of_birth  , gender , contact_number , emergency_number , email , address , rankId , role_id , base_id , service_status ,soldier_status ) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SELECT_RANK = "SELECT r.name FROM mydb.soldier AS s JOIN mydb.rank AS r ON s.rank_id = r.id where s.id = ? ";
+    private static final String SELECT_BASE =  "SELECT r.name FROM mydb.soldier AS s JOIN mydb.base AS r ON s.base_id = r.id WHERE s.id = ?";
+    private static final String SELECT_ALIVE_SOLDIER = "SELECT * FROM mydb.soldier WHERE service_status = 'alive'";
 
     private ConnectionPool connectionPool;
 
@@ -47,7 +50,7 @@ public class SoldierDAOImpl implements ISoldierDAO {
 
 
     @Override
-    public Soldier getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public Soldier getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Soldier soldier = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -55,7 +58,7 @@ public class SoldierDAOImpl implements ISoldierDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 soldier = getDataFromResultSet(resultSet);
@@ -165,7 +168,7 @@ public class SoldierDAOImpl implements ISoldierDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -181,4 +184,89 @@ public class SoldierDAOImpl implements ISoldierDAO {
             connectionPool.releaseConnection(connection);
         }
     }
+
+//--Rank
+
+
+    public String findRankForSoldier(long soldierId) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        String soldierRank = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_RANK);
+            statement.setLong(1, soldierId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                soldierRank = resultSet.getString("name");
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            resultSet.close();
+            statement.close();
+            connectionPool.releaseConnection(connection);
+        }
+        return soldierRank;
+    }
+
+    //---
+
+
+    //-- Base
+
+    public String findBaseForSoldier(long soldierId) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        String soldierBase = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BASE);
+            statement.setLong(1, soldierId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                soldierBase = resultSet.getString("name");
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            resultSet.close();
+            statement.close();
+            connectionPool.releaseConnection(connection);
+        }
+        return soldierBase;
+    }
+
+    public List<Soldier> getAliveSoldiers() throws IOException, InterruptedException, ClassNotFoundException, SQLException {
+        List<Soldier> soldiers = new ArrayList<>();
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_ALIVE_SOLDIER);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Soldier soldier = getDataFromResultSet(resultSet);
+                soldiers.add(soldier);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            resultSet.close();
+            statement.close();
+            connectionPool.releaseConnection(connection);
+        }
+        return soldiers;
+    }
+
 }

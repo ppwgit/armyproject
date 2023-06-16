@@ -86,6 +86,15 @@ public class BaseJson {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    public String toString() {
+        return "BaseJson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", geography='" + geography + '\'' +
+                ", locationId=" + locationId +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
 

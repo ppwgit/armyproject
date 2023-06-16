@@ -36,7 +36,7 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
 
 
     @Override
-    public OperationType getById(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public OperationType getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         OperationType operationType = null;
         Connection connection = null;
         ResultSet resultSet = null;
@@ -44,7 +44,7 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
         try {
             connection = connectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 operationType = getDataFromResultSet(resultSet);
@@ -127,7 +127,7 @@ public class OperationTypeDAOImpl implements IOperationTypeDAO {
     }
 
     @Override
-    public void delete(int id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {

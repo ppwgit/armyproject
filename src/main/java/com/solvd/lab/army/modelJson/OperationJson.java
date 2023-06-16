@@ -6,6 +6,7 @@ import com.solvd.lab.army.model.OperationType;
 import com.solvd.lab.army.utils.DateAdapter;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class OperationJson {
@@ -29,6 +30,9 @@ public class OperationJson {
 
     @JsonProperty("operationTypeId")
     private Long operationTypeId;
+
+    @JsonProperty("operations")
+    private List<OperationJson> operations;
 
     public OperationJson() {
 
@@ -91,4 +95,22 @@ public class OperationJson {
         this.operationTypeId = operationTypeId;
     }
 
+    public List<OperationJson> getOperation() {
+        return operations;
+    }
+
+    public void setOperation(List<OperationJson> operations) {
+        this.operations = operations;
+    }
+    public String toString() {
+        return "OperationJson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", location='" + location + '\'' +
+                ", operationTypeId=" + operationTypeId +
+                ", operations=" + operations +
+                '}';
+    }
 }
