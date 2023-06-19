@@ -39,4 +39,12 @@ public class OperationType {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String toString() {
+        return "OperationType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", operations=" + operations +
+                '}';
+    }
 }

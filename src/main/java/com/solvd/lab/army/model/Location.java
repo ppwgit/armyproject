@@ -54,4 +54,13 @@ public class Location {
     public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", cityId=" + cityId +
+                ", bases=" + bases +
+                ", city=" + city +
+                '}';
+    }
 }

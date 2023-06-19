@@ -1,5 +1,6 @@
 package com.solvd.lab.army.model;
 
+import com.solvd.lab.army.modelJson.SoldierJson;
 import com.solvd.lab.army.utils.DateAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -83,11 +84,36 @@ public class Soldier {
     @XmlElement(name = "unit")
     private List<Unit> units;
 
+    private List<SoldierJson> soldiers;
+
     public Soldier() {
     }
 
     public Soldier(long id, String firstName, String lastName, Date dateOfBirth, String gender, String contactNumber, String emergencyNumber, String email, String address, long rankId, long roleId, long baseId, String serviceStatus, String serviceStatus1, String soldierStatus) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.contactNumber = contactNumber;
+        this.emergencyNumber = emergencyNumber;
+        this.email = email;
+        this.address = address;
+        this.rankId = rankId;
+        this.roleId = roleId;
+        this.baseId = baseId;
+        this.serviceStatus = serviceStatus;
+        this.soldierStatus= soldierStatus;
+        skills = new ArrayList<>();
+        operations = new ArrayList<>();
+        units = new ArrayList<>();
+        this.rank = rank;
+        this.role = role;
+        this.base = base;
+
+    }
+
+    public Soldier(String firstName, String lastName, Date dateOfBirth, String gender, String contactNumber, String emergencyNumber, String email, String address, long rankId, long roleId, long baseId, String serviceStatus, String serviceStatus1) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -290,4 +316,37 @@ public class Soldier {
         this.baseName = baseName;
     }
 
+    public List<SoldierJson> getSoldiers() {
+        return soldiers;
+    }
+
+    public void setSoldiers(List<SoldierJson> soldiers) {
+        this.soldiers = soldiers;
+    }
+
+    public String toString() {
+        return "Soldier{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender='" + gender + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", emergencyNumber='" + emergencyNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", rankId=" + rankId +
+                ", roleId=" + roleId +
+                ", baseId=" + baseId +
+                ", serviceStatus='" + serviceStatus + '\'' +
+                ", soldierStatus='" + soldierStatus + '\'' +
+                ", rank=" + rank +
+                ", role=" + role +
+                ", base=" + base +
+                ", skills=" + skills +
+                ", operations=" + operations +
+                ", units=" + units +
+                ", soldiers=" + soldiers +
+                '}';
+    }
 }

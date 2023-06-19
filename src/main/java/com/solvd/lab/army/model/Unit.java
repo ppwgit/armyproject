@@ -62,4 +62,14 @@ public class Unit{
         public void setSoldierId(Long soldierId) {
             this.soldierId = soldierId;
         }
+
+        public String toString() {
+        return "Unit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", unitType='" + unitType + '\'' +
+                ", soldierId=" + soldierId +
+                ", soldier=" + soldier +
+                '}';
+    }
 }

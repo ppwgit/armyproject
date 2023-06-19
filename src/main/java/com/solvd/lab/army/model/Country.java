@@ -41,5 +41,12 @@ public class Country {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String toString() {
+        return "Equipment{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
 

@@ -27,11 +27,13 @@ public class State {
     public State() {
 
     }
+
     public State(long id, String name, long countryId) {
         this.id = id;
         this.name = name;
         this.countryId = countryId;
     }
+
     public Long getId() {
         return id;
     }
@@ -55,11 +57,23 @@ public class State {
     public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
+
     public Country getCounty() {
         return country;
     }
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public String toString() {
+        return "State{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", countryId=" + countryId +
+                ", country=" + country +
+                ", cities=" + cities +
+                '}';
+
     }
 }

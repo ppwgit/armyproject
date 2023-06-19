@@ -102,4 +102,15 @@ public class Operation {
     public void setOperationType(OperationType operationType) {
         this.operationType = operationType;
     }
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", location='" + location + '\'' +
+                ", operationTypeId=" + operationTypeId +
+                ", operationType=" + operationType +
+                '}';
+    }
 }

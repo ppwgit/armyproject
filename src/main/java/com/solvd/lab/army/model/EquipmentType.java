@@ -39,4 +39,11 @@ public class EquipmentType {
     public void setName(String name) {
         this.name = name;
     }
+    public String toString() {
+        return "EquipmentType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", equipments=" + equipments +
+                '}';
+    }
 }

@@ -92,5 +92,16 @@ public class Equipment {
     public void setEquipment_type(Long equipmentTypeId) {
         this.equipmentTypeId = equipmentTypeId;
     }
-
+    public String toString() {
+        return "Equipment{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", yearOfManufacture='" + yearOfManufacture + '\'' +
+                ", quantity=" + quantity +
+                ", equipmentTypeId=" + equipmentTypeId +
+                ", equipmentBases=" + equipmentBases +
+                ", equipmentType=" + equipmentType +
+                '}';
+    }
 }

@@ -21,7 +21,7 @@ public class SoldierDAOImpl implements ISoldierDAO {
     private static final String INSERT_QUERY = "INSERT INTO soldier (id, first_name , last_name , date_of_birth  , gender , contact_number , emergency_number , email , address , rankId , role_id , base_id , service_status ,soldier_status ) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SELECT_RANK = "SELECT r.name FROM mydb.soldier AS s JOIN mydb.rank AS r ON s.rank_id = r.id where s.id = ? ";
     private static final String SELECT_BASE =  "SELECT r.name FROM mydb.soldier AS s JOIN mydb.base AS r ON s.base_id = r.id WHERE s.id = ?";
-    private static final String SELECT_ALIVE_SOLDIER = "SELECT * FROM mydb.soldier WHERE service_status = 'alive'";
+    private static final String SELECT_ALIVE_SOLDIER = "SELECT * FROM mydb.soldier WHERE soldier_status = 'Alive'";
 
     private ConnectionPool connectionPool;
 

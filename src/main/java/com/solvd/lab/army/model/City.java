@@ -38,6 +38,13 @@ public class City {
         this.stateId = stateId;
     }
 
+    public City(String name, String zipCode, long stateId) {
+        this.name = name;
+        this.zipCode = zipCode;
+        this.stateId = stateId;
+    }
+
+
     public Long getId() {
         return id;
     }
@@ -61,6 +68,7 @@ public class City {
     public void setStateId(Long stateId) {
         this.stateId = stateId;
     }
+
     public String getZipCode() {
         return zipCode;
     }
@@ -69,5 +77,15 @@ public class City {
         this.zipCode = zipCode;
     }
 
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", stateId=" + stateId +
+                ", zipCode='" + zipCode + '\'' +
+                ", locations=" + locations +
+                ", state=" + state +
+                '}';
+    }
 }
 

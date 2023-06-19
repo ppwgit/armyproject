@@ -65,6 +65,15 @@ public class Rank {
     public List<RankType> getRankTypes() {
         return rankTypes;
     }
+
+
+    public RankType getRankType() {
+        return rankType;
+    }
+
+    public void setRankType(RankType rankType) {
+        this.rankType = rankType;
+    }
     @Override
     public String toString() {
         return "Rank{" +
@@ -75,14 +84,8 @@ public class Rank {
                 '}';
     }
 
-    public RankType getRankType() {
-        return rankType;
-    }
-
-    public void setRankType(RankType rankType) {
-        this.rankType = rankType;
-    }
 }
+
 
 
 
