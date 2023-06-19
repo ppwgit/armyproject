@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.CityMapper">
+    <resultMap id="cityResultMap" type="com.solvd.lab.army.model.City">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="stateId" column="state_id" />
+        <result property="zipCode" column="zip_code" />
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.CityMapper.cityResultMap">
+        SELECT * FROM city WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.CityMapper.cityResultMap">
+        SELECT * FROM city
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.City">
+        INSERT INTO city (name , state_id , zip_code )
+        VALUES (#{name}, #{stateId},#{zipCode})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.City">
+        UPDATE city SET
+        name = #{name},
+        state_id = #{stateId},
+        zip_code = #{zipCode}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM city WHERE id = #{id}
+    </delete>
+
+</mapper>

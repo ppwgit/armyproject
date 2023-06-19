@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.StateMapper">
+    <resultMap id="stateResultMap" type="com.solvd.lab.army.model.State">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="countryId" column="country_id" />
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.StateMapper.stateResultMap">
+        SELECT * FROM state WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.StateMapper.stateResultMap">
+        SELECT * FROM state
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.State">
+        INSERT INTO state (name , country_id )
+        VALUES (#{name}, #{countryId})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.State">
+        UPDATE state SET
+        name = #{name},
+        country_id = #{countryId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM state WHERE id = #{id}
+    </delete>
+
+</mapper>

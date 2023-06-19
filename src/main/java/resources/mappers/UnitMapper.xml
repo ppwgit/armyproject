@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.UnitMapper">
+    <resultMap id="unitResultMap" type="com.solvd.lab.army.model.Unit">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="unitType" column="unit_type" />
+        <result property="soldierId" column="soldier_id" />
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.UnitMapper.unitResultMap">
+        SELECT * FROM unit WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.UnitMapper.unitResultMap">
+        SELECT * FROM unit
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.Unit">
+        INSERT INTO unit (name , unit_type,soldier_id )
+        VALUES (#{name}, #{unitType},#{soldierId})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.Unit">
+        UPDATE unit SET
+        name = #{name},
+        unit_type = #{unitType},
+        soldier_id = #{soldierId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM unit WHERE id = #{id}
+    </delete>
+
+</mapper>

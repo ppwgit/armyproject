@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.OperationMapper">
+    <resultMap id="operationResultMap" type="com.solvd.lab.army.model.Operation">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="startDate" column="start_date" />
+        <result property="endDate" column="end_date" />
+        <result property="location" column="location" />
+        <result property="operationTypeId" column="operation_type_id" />    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.OperationMapper.operationResultMap">
+        SELECT * FROM operation WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.OperationMapper.operationResultMap">
+        SELECT * FROM operation
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.Operation">
+        INSERT INTO operation (name , start_date , end_date,location,operation_type_id )
+        VALUES (#{name}, #{startDate, jdbcType=DATE},#{endDate, jdbcType=DATE}, #{location},#{operationTypeId})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.Operation">
+        UPDATE operation SET
+        name = #{name},
+        start_date = #{startDate, jdbcType=DATE},
+        end_date = #{endDate, jdbcType=DATE},
+        location = #{location},
+        operation_type_id = #{operationTypeId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM operation WHERE id = #{id}
+    </delete>
+
+</mapper>

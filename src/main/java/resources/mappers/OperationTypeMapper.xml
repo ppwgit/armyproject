@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.OperationTypeMapper">
+    <resultMap id="operationTypeResultMap" type="com.solvd.lab.army.model.OperationType">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.OperationTypeMapper.operationTypeResultMap">
+        SELECT * FROM operation_type WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.OperationTypeMapper.operationTypeResultMap">
+        SELECT * FROM operation_type
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.OperationType">
+        INSERT INTO operation_type (name)
+        VALUES (#{name})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.OperationType">
+        UPDATE operation_type SET
+        name = #{name}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM operation_type WHERE id = #{id}
+    </delete>
+
+</mapper>

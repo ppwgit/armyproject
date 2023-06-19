@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.SoldierMapper">
+    <resultMap id="soldierResultMap" type="com.solvd.lab.army.model.Soldier">
+        <id property="id" column="id" />
+        <result property="firstName" column="first_name" />
+        <result property="lastName" column="last_name" />
+        <result property="dateOfBirth" column="date_of_birth" />
+        <result property="gender" column="gender" />
+        <result property="contactNumber" column="contact_number" />
+        <result property="emergencyNumber" column="emergency_number" />
+        <result property="email" column="email" />
+        <result property="address" column="address" />
+        <result property="rankId" column="rank_id" />
+        <result property="roleId" column="role_id" />
+        <result property="baseId" column="base_id" />
+        <result property="serviceStatus" column="service_status" />
+        <result property="soldierStatus" column="soldier_status" />
+        <result property="rankName" column="rank_name" />
+        <result property="baseName" column="base_name" />
+        <collection property="skills" ofType="com.solvd.lab.army.model.Skill">
+            <result property="id" column="id"/>
+            <result property="name" column="skill_name"/>
+        </collection>
+        <collection property="operations" ofType="com.solvd.lab.army.model.Operation">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="startDate" column="start_date" />
+            <result property="endDate" column="end_date" />
+            <result property="location" column="location" />
+            <result property="operationTypeId" column="operation_type_id" />
+        </collection>
+        <collection property="units" ofType="com.solvd.lab.army.model.Unit">
+            <result property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="unitType" column="unit_type" />
+            <result property="soldierId" column="soldier_id" />
+        </collection>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+        SELECT * FROM soldier WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+        SELECT * FROM soldier
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.Soldier">
+        INSERT INTO soldier (first_name , last_name , date_of_birth  , gender , contact_number , emergency_number , email , address , rank_id , role_id , base_id , service_status ,soldier_status )
+        VALUES (#{firstName}, #{lastName}, #{dateOfBirth, jdbcType=DATE} ,#{gender}, #{contactNumber},#{emergencyNumber},#{email},#{address},#{rankId},#{roleId},#{baseId},#{serviceStatus},#{soldierStatus})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.Soldier">
+        UPDATE soldier SET
+        first_name = #{firstName},
+        last_name = #{lastName},
+        date_of_birth = #{dateOfBirth, jdbcType=DATE},
+        gender = #{gender},
+        contact_number = #{contactNumber},
+        emergency_number = #{emergencyNumber},
+        email = #{email},
+        address = #{address},
+        rank_id = #{rankId},
+        role_id = #{roleId},
+        base_id = #{baseId},
+        service_status = #{serviceStatus},
+        soldier_status = #{soldierStatus}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM soldier WHERE id = #{id}
+    </delete>
+
+    <select id="findRankForSoldier" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+        SELECT r.name as rank_name FROM mydb.soldier AS s JOIN mydb.rank AS r ON s.rank_id = r.id where s.id = #{id}
+    </select>
+
+    <select id="findBaseForSoldier" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+        SELECT r.name as base_name FROM mydb.soldier AS s JOIN mydb.base AS r ON s.base_id = r.id WHERE s.id  = #{id}
+    </select>
+
+    <select id="findAllAliveSoldiers" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+        SELECT * FROM soldier WHERE soldier_status = 'Alive'
+    </select>
+
+    <select id="findSkillsBySoldierId" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+        SELECT s.id As id,sk.name As skill_name FROM mydb.soldier AS s JOIN mydb.soldier_skill AS b ON s.id = b.soldier_skill_id JOIN mydb.skill AS sk ON b.skill_id = sk.id where s.id = #{id}
+    </select>
+
+    <select id="findOperationsBySoldierId" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+
+        SELECT sk.id, sk.name, sk.start_date, sk.end_date, sk.location, sk.operation_type_id FROM mydb.soldier AS s
+        JOIN mydb.soldier_operation AS b ON s.id = b.soldier_operation_id
+        JOIN mydb.operation AS sk ON b.operation_id = sk.id where s.id = #{id}
+    </select>
+
+    <select id="findUnitsBySoldierId" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.SoldierMapper.soldierResultMap">
+        SELECT u.* FROM mydb.soldier AS s JOIN mydb.unit AS u ON u.soldier_id = s.id WHERE u.soldier_id = #{id}
+    </select>
+</mapper>

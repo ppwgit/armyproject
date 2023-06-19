@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.RankMapper">
+    <resultMap id="rankResultMap" type="com.solvd.lab.army.model.Rank">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="rankTypeId" column="rank_type_id" />
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.RankMapper.rankResultMap">
+        SELECT * FROM rank WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.RankMapper.rankResultMap">
+        SELECT * FROM rank
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.Rank">
+        INSERT INTO rank (name , rank_type_id )
+        VALUES (#{name}, #{rankTypeId})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.Rank">
+        UPDATE rank SET
+        name = #{name},
+        rank_type_id = #{rankTypeId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM rank WHERE id = #{id}
+    </delete>
+
+</mapper>

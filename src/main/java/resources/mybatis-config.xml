@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+               <!--  <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/> -->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mydb" />
+                <property name="username" value="root"/>
+                <property name="password" value="Root@1902"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mappers/SoldierMapper.xml"/>
+        <mapper resource="mappers/CityMapper.xml"/>
+        <mapper resource="mappers/CountryMapper.xml"/>
+        <mapper resource="mappers/EquipmentMapper.xml"/>
+        <mapper resource="mappers/EquipmentTypeMapper.xml"/>
+        <mapper resource="mappers/LocationMapper.xml"/>
+        <mapper resource="mappers/OperationMapper.xml"/>
+        <mapper resource="mappers/OperationTypeMapper.xml"/>
+        <mapper resource="mappers/RankMapper.xml"/>
+        <mapper resource="mappers/RankTypeMapper.xml"/>
+        <mapper resource="mappers/RoleMapper.xml"/>
+        <mapper resource="mappers/SkillMapper.xml"/>
+        <mapper resource="mappers/StateMapper.xml"/>
+        <mapper resource="mappers/UnitMapper.xml"/>
+    </mappers>
+</configuration>

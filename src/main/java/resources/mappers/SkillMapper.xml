@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.lab.army.mybatis.mappers.SkillMapper">
+    <resultMap id="skillResultMap" type="com.solvd.lab.army.model.Skill">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="description" column="description" />
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="com.solvd.lab.army.mybatis.mappers.SkillMapper.skillResultMap">
+        SELECT * FROM skill WHERE id = #{id}
+    </select>
+    <select id="getAll" resultMap="com.solvd.lab.army.mybatis.mappers.SkillMapper.skillResultMap">
+        SELECT * FROM skill
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.lab.army.model.Skill">
+        INSERT INTO skill (name,description)
+        VALUES (#{name},#{description})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.lab.army.model.Skill">
+        UPDATE skill SET
+        name = #{name},
+        description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM skill WHERE id = #{id}
+    </delete>
+
+</mapper>
