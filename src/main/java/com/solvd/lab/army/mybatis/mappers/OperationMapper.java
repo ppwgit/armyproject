@@ -2,7 +2,6 @@ package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.IOperationDAO;
 import com.solvd.lab.army.model.Operation;
-import com.solvd.lab.army.mybatis.IOperationMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

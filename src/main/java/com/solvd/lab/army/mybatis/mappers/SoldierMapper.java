@@ -5,7 +5,6 @@ import com.solvd.lab.army.model.Operation;
 import com.solvd.lab.army.model.Skill;
 import com.solvd.lab.army.model.Soldier;
 import com.solvd.lab.army.model.Unit;
-import com.solvd.lab.army.mybatis.ISoldierMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

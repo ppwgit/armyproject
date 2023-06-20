@@ -2,7 +2,6 @@ package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.ICountryDAO;
 import com.solvd.lab.army.model.Country;
-import com.solvd.lab.army.mybatis.ICountryMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

@@ -1,9 +1,7 @@
 package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.IEquipmentTypeDAO;
-import com.solvd.lab.army.model.Equipment;
 import com.solvd.lab.army.model.EquipmentType;
-import com.solvd.lab.army.mybatis.IEquipmentTypeMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

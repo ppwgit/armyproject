@@ -1,9 +1,7 @@
 package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.ILocationDAO;
-import com.solvd.lab.army.model.City;
 import com.solvd.lab.army.model.Location;
-import com.solvd.lab.army.mybatis.ILocationMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

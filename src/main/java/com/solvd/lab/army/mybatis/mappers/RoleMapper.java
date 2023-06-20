@@ -2,7 +2,6 @@ package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.IRoleDAO;
 import com.solvd.lab.army.model.Role;
-import com.solvd.lab.army.mybatis.IRoleMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

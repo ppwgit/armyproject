@@ -1,7 +1,7 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.IUnitDAO;
 import com.solvd.lab.army.model.Unit;
-import com.solvd.lab.army.mybatis.IUnitMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UnitMapper implements IUnitMapper {
+public class UnitMapper implements IUnitDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -20,7 +20,7 @@ public class UnitMapper implements IUnitMapper {
     @Override
     public Unit getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IUnitMapper mapper = session.getMapper(UnitMapper.class);
+            IUnitDAO mapper = session.getMapper(UnitMapper.class);
             return mapper.getById(id);
         }
     }
@@ -28,7 +28,7 @@ public class UnitMapper implements IUnitMapper {
     @Override
     public List<Unit> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IUnitMapper mapper = session.getMapper(UnitMapper.class);
+            IUnitDAO mapper = session.getMapper(UnitMapper.class);
             return mapper.getAll();
         }
     }
@@ -36,7 +36,7 @@ public class UnitMapper implements IUnitMapper {
     @Override
     public void insert(Unit unit) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IUnitMapper mapper = session.getMapper(UnitMapper.class);
+            IUnitDAO mapper = session.getMapper(UnitMapper.class);
             mapper.insert(unit);
             session.commit();
         }
@@ -45,7 +45,7 @@ public class UnitMapper implements IUnitMapper {
     @Override
     public void update(Unit unit) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IUnitMapper mapper = session.getMapper(UnitMapper.class);
+            IUnitDAO mapper = session.getMapper(UnitMapper.class);
             mapper.update(unit);
             session.commit();
         }
@@ -55,7 +55,7 @@ public class UnitMapper implements IUnitMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IUnitMapper mapper = session.getMapper(UnitMapper.class);
+            IUnitDAO mapper = session.getMapper(UnitMapper.class);
             mapper.delete(id);
             session.commit();
         }

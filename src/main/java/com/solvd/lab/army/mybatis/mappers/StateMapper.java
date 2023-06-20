@@ -2,7 +2,6 @@ package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.IStateDAO;
 import com.solvd.lab.army.model.State;
-import com.solvd.lab.army.mybatis.IStateMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

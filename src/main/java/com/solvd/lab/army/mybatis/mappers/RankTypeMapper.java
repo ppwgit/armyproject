@@ -2,7 +2,6 @@ package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.IRankTypeDAO;
 import com.solvd.lab.army.model.RankType;
-import com.solvd.lab.army.mybatis.IRankTypeMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

@@ -1,11 +1,7 @@
 package com.solvd.lab.army.mybatis.mappers;
 
-import com.solvd.lab.army.dao.IBaseDAO;
 import com.solvd.lab.army.dao.ICityDAO;
 import com.solvd.lab.army.model.City;
-import com.solvd.lab.army.model.Soldier;
-import com.solvd.lab.army.mybatis.ICityMapper;
-import com.solvd.lab.army.mybatis.ISoldierMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

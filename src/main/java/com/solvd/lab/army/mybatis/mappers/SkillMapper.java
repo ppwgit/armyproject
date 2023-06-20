@@ -2,7 +2,6 @@ package com.solvd.lab.army.mybatis.mappers;
 
 import com.solvd.lab.army.dao.ISkillDAO;
 import com.solvd.lab.army.model.Skill;
-import com.solvd.lab.army.mybatis.ISkillMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
