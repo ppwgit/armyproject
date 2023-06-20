@@ -1,5 +1,7 @@
 package com.solvd.lab.army.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.solvd.lab.army.utils.DateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -12,27 +14,36 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Operation {
-
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("name")
     @XmlElement(name = "name")
     private String name;
 
+    @JsonProperty("startDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date startDate;
 
+    @JsonProperty("endDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date endDate;
 
+    @JsonProperty("location")
     @XmlElement(name = "location")
     private String location;
 
+    @JsonProperty("operationTypeId")
     @XmlElement(name = "operationTypeId")
     private Long operationTypeId;
 
     @XmlElement(name = "operationType")
     private OperationType operationType;
-    //private List<SoldierOperation> soldierOperations;
+
+    @JsonProperty("operations")
+    private List<Operation> operations;
 
     public Operation() {
 
@@ -102,6 +113,14 @@ public class Operation {
     public void setOperationType(OperationType operationType) {
         this.operationType = operationType;
     }
+    public List<Operation> getOperation() {
+        return operations;
+    }
+
+    public void setOperation(List<Operation> operations) {
+        this.operations = operations;
+    }
+
     public String toString() {
         return "Operation{" +
                 "id=" + id +
@@ -111,6 +130,7 @@ public class Operation {
                 ", location='" + location + '\'' +
                 ", operationTypeId=" + operationTypeId +
                 ", operationType=" + operationType +
+                ", operations=" + operations +
                 '}';
     }
 }

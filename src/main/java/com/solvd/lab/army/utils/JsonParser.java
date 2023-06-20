@@ -1,32 +1,30 @@
 package com.solvd.lab.army.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solvd.lab.army.dao.impl.SoldierDAOImpl;
-import com.solvd.lab.army.modelJson.OperationJson;
-import com.solvd.lab.army.modelJson.SkillJson;
-import com.solvd.lab.army.modelJson.SoldierJson;
-import com.solvd.lab.army.modelJson.UnitJson;
+import com.solvd.lab.army.model.Soldier;
+import com.solvd.lab.army.model.Operation;
+import com.solvd.lab.army.model.Skill;
+import com.solvd.lab.army.model.Unit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+
 
 public class JsonParser {
     private static final Logger logger = LogManager.getLogger(JsonParser.class);
 
     ObjectMapper objectMapper = new ObjectMapper();
-    String jsonfilepath = "C:/Users/ppw/solvdlab/army/src/main/java/com/solvd/lab/army/xml/soldiers.xml";
+    String jsonfilepath = "C:/Users/ppw/solvdlab/army/src/main/java/resources/soldiers.json";
 
     File jsonFile = new File(jsonfilepath);
-    SoldierJson soldiers;
+    Soldier soldiers;
 
     {
         try {
-            soldiers = objectMapper.readValue(jsonFile,SoldierJson .class);
-            for (SoldierJson soldier : soldiers.getSoldiers()) {
+            soldiers = objectMapper.readValue(jsonFile,Soldier .class);
+            for (Soldier soldier : soldiers.getSoldiers()) {
                 soldier.getId();
                 soldier.getFirstName();
                 soldier.getLastName();
@@ -37,15 +35,15 @@ public class JsonParser {
                 soldier.getEmail();
                 soldier.getAddress();
 
-                for (UnitJson unit : soldier.getUnits()) {
+                for (Unit unit : soldier.getUnits()) {
                     unit.getName();
                 }
 
-                for (SkillJson skill : soldier.getSkills()) {
+                for (Skill skill : soldier.getSkills()) {
                     skill.getName();
                 }
 
-                for (OperationJson operation : soldier.getOperations()) {
+                for (Operation operation : soldier.getOperations()) {
                     operation.getName();
                 }
 

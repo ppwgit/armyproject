@@ -1,5 +1,7 @@
 package com.solvd.lab.army.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,8 +10,10 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Role {
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("name")
     @XmlElement(name = "name")
     private String name;
 

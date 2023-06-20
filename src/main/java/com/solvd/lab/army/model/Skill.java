@@ -1,5 +1,7 @@
 package com.solvd.lab.army.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,13 +10,20 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Skill {
+
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("name")
     @XmlElement(name = "name")
     private String name;
 
+    @JsonProperty("description")
     @XmlElement(name = "description")
     private String description;
+
+    @JsonProperty("skills")
+    private List<Skill> skills;
 
     @XmlElementWrapper(name = "soldierSkills")
     @XmlElement(name = "soldierSkill")
@@ -52,11 +61,19 @@ public class Skill {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<Skill> getSkill() {
+        return skills;
+    }
+    public void setSkill(List<Skill> skills) {
+        this.skills = skills;
+    }
     public String toString() {
         return "Skill{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", skills='" + skills + '\'' +
                 ", soldierSkills=" + soldierSkills +
                 '}';
     }

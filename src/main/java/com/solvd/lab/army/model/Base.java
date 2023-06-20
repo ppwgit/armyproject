@@ -1,5 +1,7 @@
 package com.solvd.lab.army.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,30 +10,31 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Base {
-
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("name")
     @XmlElement(name = "name")
     private String name;
 
+    @JsonProperty("geography")
     @XmlElement(name = "geography")
     private String geography;
 
+    @JsonProperty("locationId")
     @XmlElement(name = "locationId")
     private Long locationId;
 
+    @JsonProperty("contactNumber")
     @XmlElement(name = "contactNumber")
     private String contactNumber;
 
+    @JsonProperty("email")
     @XmlElement(name = "email")
     private String email;
 
     @XmlElement(name = "location")
     private Location location;
-
-   /* @XmlElementWrapper(name = "skills")
-    @XmlElement(name = "skill")
-    private List<EquipmentBase> equipmentBases;*/
 
     @XmlElementWrapper(name = "soldiers")
     @XmlElement(name = "soldier")
@@ -97,5 +100,14 @@ public class Base {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String toString() {
+        return "BaseJson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", geography='" + geography + '\'' +
+                ", locationId=" + locationId +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
-
