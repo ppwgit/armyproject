@@ -29,8 +29,8 @@ public class DomXml {
 
     public static void main(String[] args) {
         try {
-            String xmlFile = "C:/Users/ppw/solvdlab/army/src/main/java/com/solvd/lab/army/xml/soldiers.xml";
-            String xsdFile = "C:/Users/ppw/solvdlab/army/src/main/java/com/solvd/lab/army/xml/soldiers.xsd";
+            String xmlFile = "C:/Users/ppw/solvdlab/army/src/main/java/resources/xml/soldiers.xml";
+            String xsdFile = "C:/Users/ppw/solvdlab/army/src/main/java/resources/xml/soldiers.xsd";
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
