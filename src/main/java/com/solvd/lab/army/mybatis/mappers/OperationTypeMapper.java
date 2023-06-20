@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.IOperationTypeDAO;
 import com.solvd.lab.army.model.Operation;
 import com.solvd.lab.army.model.OperationType;
 import com.solvd.lab.army.mybatis.IOperationTypeMapper;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class OperationTypeMapper implements IOperationTypeMapper {
+public class OperationTypeMapper implements IOperationTypeDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -21,7 +22,7 @@ public class OperationTypeMapper implements IOperationTypeMapper {
     @Override
     public OperationType getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IOperationTypeMapper mapper = session.getMapper(OperationTypeMapper.class);
+            IOperationTypeDAO mapper = session.getMapper(OperationTypeMapper.class);
             return mapper.getById(id);
         }
     }
@@ -29,7 +30,7 @@ public class OperationTypeMapper implements IOperationTypeMapper {
     @Override
     public List<OperationType> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IOperationTypeMapper mapper = session.getMapper(OperationTypeMapper.class);
+            IOperationTypeDAO mapper = session.getMapper(OperationTypeMapper.class);
             return mapper.getAll();
         }
     }
@@ -37,7 +38,7 @@ public class OperationTypeMapper implements IOperationTypeMapper {
     @Override
     public void insert(OperationType operationType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IOperationTypeMapper mapper = session.getMapper(OperationTypeMapper.class);
+            IOperationTypeDAO mapper = session.getMapper(OperationTypeMapper.class);
             mapper.insert(operationType);
             session.commit();
         }
@@ -46,7 +47,7 @@ public class OperationTypeMapper implements IOperationTypeMapper {
     @Override
     public void update(OperationType operationType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IOperationTypeMapper mapper = session.getMapper(OperationTypeMapper.class);
+            IOperationTypeDAO mapper = session.getMapper(OperationTypeMapper.class);
             mapper.update(operationType);
             session.commit();
         }
@@ -56,7 +57,7 @@ public class OperationTypeMapper implements IOperationTypeMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IOperationTypeMapper mapper = session.getMapper(OperationTypeMapper.class);
+            IOperationTypeDAO mapper = session.getMapper(OperationTypeMapper.class);
             mapper.delete(id);
             session.commit();
         }

@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.IEquipmentTypeDAO;
 import com.solvd.lab.army.model.Equipment;
 import com.solvd.lab.army.model.EquipmentType;
 import com.solvd.lab.army.mybatis.IEquipmentTypeMapper;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class EquipmentTypeMapper implements IEquipmentTypeMapper {
+public class EquipmentTypeMapper implements IEquipmentTypeDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -21,7 +22,7 @@ public class EquipmentTypeMapper implements IEquipmentTypeMapper {
     @Override
     public EquipmentType getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IEquipmentTypeMapper mapper = session.getMapper(EquipmentTypeMapper.class);
+            IEquipmentTypeDAO mapper = session.getMapper(EquipmentTypeMapper.class);
             return mapper.getById(id);
         }
     }
@@ -29,7 +30,7 @@ public class EquipmentTypeMapper implements IEquipmentTypeMapper {
     @Override
     public List<EquipmentType> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IEquipmentTypeMapper mapper = session.getMapper(EquipmentTypeMapper.class);
+            IEquipmentTypeDAO mapper = session.getMapper(EquipmentTypeMapper.class);
             return mapper.getAll();
         }
     }
@@ -37,7 +38,7 @@ public class EquipmentTypeMapper implements IEquipmentTypeMapper {
     @Override
     public void insert(EquipmentType equipmentType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IEquipmentTypeMapper mapper = session.getMapper(EquipmentTypeMapper.class);
+            IEquipmentTypeDAO mapper = session.getMapper(EquipmentTypeMapper.class);
             mapper.insert(equipmentType);
             session.commit();
         }
@@ -46,7 +47,7 @@ public class EquipmentTypeMapper implements IEquipmentTypeMapper {
     @Override
     public void update(EquipmentType equipmentType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IEquipmentTypeMapper mapper = session.getMapper(EquipmentTypeMapper.class);
+            IEquipmentTypeDAO mapper = session.getMapper(EquipmentTypeMapper.class);
             mapper.update(equipmentType);
             session.commit();
         }
@@ -56,7 +57,7 @@ public class EquipmentTypeMapper implements IEquipmentTypeMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IEquipmentTypeMapper mapper = session.getMapper(EquipmentTypeMapper.class);
+            IEquipmentTypeDAO mapper = session.getMapper(EquipmentTypeMapper.class);
             mapper.delete(id);
             session.commit();
         }

@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.IStateDAO;
 import com.solvd.lab.army.model.State;
 import com.solvd.lab.army.mybatis.IStateMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class StateMapper implements IStateMapper {
+public class StateMapper implements IStateDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -20,7 +21,7 @@ public class StateMapper implements IStateMapper {
     @Override
     public State getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IStateMapper mapper = session.getMapper(StateMapper.class);
+            IStateDAO mapper = session.getMapper(StateMapper.class);
             return mapper.getById(id);
         }
     }
@@ -28,7 +29,7 @@ public class StateMapper implements IStateMapper {
     @Override
     public List<State> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IStateMapper mapper = session.getMapper(StateMapper.class);
+            IStateDAO mapper = session.getMapper(StateMapper.class);
             return mapper.getAll();
         }
     }
@@ -36,7 +37,7 @@ public class StateMapper implements IStateMapper {
     @Override
     public void insert(State state) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IStateMapper mapper = session.getMapper(StateMapper.class);
+            IStateDAO mapper = session.getMapper(StateMapper.class);
             mapper.insert(state);
             session.commit();
         }
@@ -45,7 +46,7 @@ public class StateMapper implements IStateMapper {
     @Override
     public void update(State state) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IStateMapper mapper = session.getMapper(StateMapper.class);
+            IStateDAO mapper = session.getMapper(StateMapper.class);
             mapper.update(state);
             session.commit();
         }
@@ -55,7 +56,7 @@ public class StateMapper implements IStateMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IStateMapper mapper = session.getMapper(StateMapper.class);
+            IStateDAO mapper = session.getMapper(StateMapper.class);
             mapper.delete(id);
             session.commit();
         }

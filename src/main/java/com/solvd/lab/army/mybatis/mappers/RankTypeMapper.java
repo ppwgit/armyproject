@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.IRankTypeDAO;
 import com.solvd.lab.army.model.RankType;
 import com.solvd.lab.army.mybatis.IRankTypeMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RankTypeMapper implements IRankTypeMapper {
+public class RankTypeMapper implements IRankTypeDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -20,7 +21,7 @@ public class RankTypeMapper implements IRankTypeMapper {
     @Override
     public RankType getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRankTypeMapper mapper = session.getMapper(RankTypeMapper.class);
+            IRankTypeDAO mapper = session.getMapper(RankTypeMapper.class);
             return mapper.getById(id);
         }
     }
@@ -28,7 +29,7 @@ public class RankTypeMapper implements IRankTypeMapper {
     @Override
     public List<RankType> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRankTypeMapper mapper = session.getMapper(RankTypeMapper.class);
+            IRankTypeDAO mapper = session.getMapper(RankTypeMapper.class);
             return mapper.getAll();
         }
     }
@@ -36,7 +37,7 @@ public class RankTypeMapper implements IRankTypeMapper {
     @Override
     public void insert(RankType rankType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRankTypeMapper mapper = session.getMapper(RankTypeMapper.class);
+            IRankTypeDAO mapper = session.getMapper(RankTypeMapper.class);
             mapper.insert(rankType);
             session.commit();
         }
@@ -45,7 +46,7 @@ public class RankTypeMapper implements IRankTypeMapper {
     @Override
     public void update(RankType rankType) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRankTypeMapper mapper = session.getMapper(RankTypeMapper.class);
+            IRankTypeDAO mapper = session.getMapper(RankTypeMapper.class);
             mapper.update(rankType);
             session.commit();
         }
@@ -55,7 +56,7 @@ public class RankTypeMapper implements IRankTypeMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRankTypeMapper mapper = session.getMapper(RankTypeMapper.class);
+            IRankTypeDAO mapper = session.getMapper(RankTypeMapper.class);
             mapper.delete(id);
             session.commit();
         }

@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.ISoldierDAO;
 import com.solvd.lab.army.model.Operation;
 import com.solvd.lab.army.model.Skill;
 import com.solvd.lab.army.model.Soldier;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SoldierMapper implements ISoldierMapper {
+public class SoldierMapper implements ISoldierDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -23,7 +24,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public Soldier getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.getById(id);
         }
     }
@@ -31,7 +32,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public List<Soldier> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.getAll();
         }
     }
@@ -39,7 +40,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public void insert(Soldier soldier) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             mapper.insert(soldier);
             session.commit();
         }
@@ -48,7 +49,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public void update(Soldier soldier) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             mapper.update(soldier);
             session.commit();
         }
@@ -57,7 +58,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             mapper.delete(id);
             session.commit();
         }
@@ -65,7 +66,7 @@ public class SoldierMapper implements ISoldierMapper {
 
     public String findRankForSoldier(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.findRankForSoldier(id);
         }
 
@@ -74,7 +75,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public String findBaseForSoldier(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.findBaseForSoldier(id);
         }
     }
@@ -82,7 +83,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public List<Soldier> findAllAliveSoldiers() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.findAllAliveSoldiers();
         }
     }
@@ -90,7 +91,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public List<Skill> findSkillsBySoldierId() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.findSkillsBySoldierId();
         }
     }
@@ -98,7 +99,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public List<Operation> findOperationsBySoldierId() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.findOperationsBySoldierId();
         }
     }
@@ -106,7 +107,7 @@ public class SoldierMapper implements ISoldierMapper {
     @Override
     public List<Unit> findUnitsBySoldierId() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ISoldierMapper mapper = session.getMapper(SoldierMapper.class);
+            ISoldierDAO mapper = session.getMapper(SoldierMapper.class);
             return mapper.findUnitsBySoldierId();
         }
     }

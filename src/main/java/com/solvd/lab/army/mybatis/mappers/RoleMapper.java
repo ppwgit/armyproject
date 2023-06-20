@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.IRoleDAO;
 import com.solvd.lab.army.model.Role;
 import com.solvd.lab.army.mybatis.IRoleMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RoleMapper implements IRoleMapper {
+public class RoleMapper implements IRoleDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -20,7 +21,7 @@ public class RoleMapper implements IRoleMapper {
     @Override
     public Role getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRoleMapper mapper = session.getMapper(RoleMapper.class);
+            IRoleDAO mapper = session.getMapper(RoleMapper.class);
             return mapper.getById(id);
         }
     }
@@ -28,7 +29,7 @@ public class RoleMapper implements IRoleMapper {
     @Override
     public List<Role> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRoleMapper mapper = session.getMapper(RoleMapper.class);
+            IRoleDAO mapper = session.getMapper(RoleMapper.class);
             return mapper.getAll();
         }
     }
@@ -36,7 +37,7 @@ public class RoleMapper implements IRoleMapper {
     @Override
     public void insert(Role role) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRoleMapper mapper = session.getMapper(RoleMapper.class);
+            IRoleDAO mapper = session.getMapper(RoleMapper.class);
             mapper.insert(role);
             session.commit();
         }
@@ -45,7 +46,7 @@ public class RoleMapper implements IRoleMapper {
     @Override
     public void update(Role role) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRoleMapper mapper = session.getMapper(RoleMapper.class);
+            IRoleDAO mapper = session.getMapper(RoleMapper.class);
             mapper.update(role);
             session.commit();
         }
@@ -55,7 +56,7 @@ public class RoleMapper implements IRoleMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IRoleMapper mapper = session.getMapper(RoleMapper.class);
+            IRoleDAO mapper = session.getMapper(RoleMapper.class);
             mapper.delete(id);
             session.commit();
         }

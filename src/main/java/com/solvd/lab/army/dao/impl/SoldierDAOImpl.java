@@ -1,7 +1,10 @@
 package com.solvd.lab.army.dao.impl;
 
 import com.solvd.lab.army.dao.ISoldierDAO;
+import com.solvd.lab.army.model.Operation;
+import com.solvd.lab.army.model.Skill;
 import com.solvd.lab.army.model.Soldier;
+import com.solvd.lab.army.model.Unit;
 import com.solvd.lab.army.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -241,6 +244,26 @@ public class SoldierDAOImpl implements ISoldierDAO {
             connectionPool.releaseConnection(connection);
         }
         return soldierBase;
+    }
+
+    @Override
+    public List<Soldier> findAllAliveSoldiers() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<Skill> findSkillsBySoldierId() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<Operation> findOperationsBySoldierId() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<Unit> findUnitsBySoldierId() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        return null;
     }
 
     public List<Soldier> getAliveSoldiers() throws IOException, InterruptedException, ClassNotFoundException, SQLException {

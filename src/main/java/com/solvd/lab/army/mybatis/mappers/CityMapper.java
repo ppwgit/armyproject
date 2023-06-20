@@ -1,5 +1,7 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.IBaseDAO;
+import com.solvd.lab.army.dao.ICityDAO;
 import com.solvd.lab.army.model.City;
 import com.solvd.lab.army.model.Soldier;
 import com.solvd.lab.army.mybatis.ICityMapper;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CityMapper implements ICityMapper {
+public class CityMapper implements ICityDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -22,7 +24,7 @@ public class CityMapper implements ICityMapper {
     @Override
     public City getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICityMapper mapper = session.getMapper(CityMapper.class);
+            ICityDAO mapper = session.getMapper(CityMapper.class);
             return mapper.getById(id);
         }
     }
@@ -30,7 +32,7 @@ public class CityMapper implements ICityMapper {
     @Override
     public List<City> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICityMapper mapper = session.getMapper(CityMapper.class);
+            ICityDAO mapper = session.getMapper(CityMapper.class);
             return mapper.getAll();
         }
     }
@@ -38,7 +40,7 @@ public class CityMapper implements ICityMapper {
     @Override
     public void insert(City city) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICityMapper mapper = session.getMapper(CityMapper.class);
+            ICityDAO mapper = session.getMapper(CityMapper.class);
             mapper.insert(city);
             session.commit();
         }
@@ -47,7 +49,7 @@ public class CityMapper implements ICityMapper {
     @Override
     public void update(City city) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICityMapper mapper = session.getMapper(CityMapper.class);
+            ICityDAO mapper = session.getMapper(CityMapper.class);
             mapper.update(city);
             session.commit();
         }
@@ -57,7 +59,7 @@ public class CityMapper implements ICityMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICityMapper mapper = session.getMapper(CityMapper.class);
+            ICityDAO mapper = session.getMapper(CityMapper.class);
             mapper.delete(id);
             session.commit();
         }

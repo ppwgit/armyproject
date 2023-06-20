@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.ILocationDAO;
 import com.solvd.lab.army.model.City;
 import com.solvd.lab.army.model.Location;
 import com.solvd.lab.army.mybatis.ILocationMapper;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class LocationMapper implements ILocationMapper {
+public class LocationMapper implements ILocationDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -21,7 +22,7 @@ public class LocationMapper implements ILocationMapper {
     @Override
     public Location getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ILocationMapper mapper = session.getMapper(LocationMapper.class);
+            ILocationDAO mapper = session.getMapper(LocationMapper.class);
             return mapper.getById(id);
         }
     }
@@ -29,7 +30,7 @@ public class LocationMapper implements ILocationMapper {
     @Override
     public List<Location> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ILocationMapper mapper = session.getMapper(LocationMapper.class);
+            ILocationDAO mapper = session.getMapper(LocationMapper.class);
             return mapper.getAll();
         }
     }
@@ -37,7 +38,7 @@ public class LocationMapper implements ILocationMapper {
     @Override
     public void insert(Location location) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ILocationMapper mapper = session.getMapper(LocationMapper.class);
+            ILocationDAO mapper = session.getMapper(LocationMapper.class);
             mapper.insert(location);
             session.commit();
         }
@@ -46,7 +47,7 @@ public class LocationMapper implements ILocationMapper {
     @Override
     public void update(Location location) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ILocationMapper mapper = session.getMapper(LocationMapper.class);
+            ILocationDAO mapper = session.getMapper(LocationMapper.class);
             mapper.update(location);
             session.commit();
         }
@@ -56,7 +57,7 @@ public class LocationMapper implements ILocationMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ILocationMapper mapper = session.getMapper(LocationMapper.class);
+            ILocationDAO mapper = session.getMapper(LocationMapper.class);
             mapper.delete(id);
             session.commit();
         }

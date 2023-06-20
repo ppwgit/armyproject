@@ -1,5 +1,6 @@
 package com.solvd.lab.army.mybatis.mappers;
 
+import com.solvd.lab.army.dao.ICountryDAO;
 import com.solvd.lab.army.model.Country;
 import com.solvd.lab.army.mybatis.ICountryMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CountryMapper implements ICountryMapper {
+public class CountryMapper implements ICountryDAO {
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -20,7 +21,7 @@ public class CountryMapper implements ICountryMapper {
     @Override
     public Country getById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICountryMapper mapper = session.getMapper(CountryMapper.class);
+            ICountryDAO mapper = session.getMapper(CountryMapper.class);
             return mapper.getById(id);
         }
     }
@@ -28,7 +29,7 @@ public class CountryMapper implements ICountryMapper {
     @Override
     public List<Country> getAll() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICountryMapper mapper = session.getMapper(CountryMapper.class);
+            ICountryDAO mapper = session.getMapper(CountryMapper.class);
             return mapper.getAll();
         }
     }
@@ -36,7 +37,7 @@ public class CountryMapper implements ICountryMapper {
     @Override
     public void insert(Country country) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICountryMapper mapper = session.getMapper(CountryMapper.class);
+            ICountryDAO mapper = session.getMapper(CountryMapper.class);
             mapper.insert(country);
             session.commit();
         }
@@ -45,7 +46,7 @@ public class CountryMapper implements ICountryMapper {
     @Override
     public void update(Country country) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICountryMapper mapper = session.getMapper(CountryMapper.class);
+            ICountryDAO mapper = session.getMapper(CountryMapper.class);
             mapper.update(country);
             session.commit();
         }
@@ -55,7 +56,7 @@ public class CountryMapper implements ICountryMapper {
     @Override
     public void delete(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            ICountryMapper mapper = session.getMapper(CountryMapper.class);
+            ICountryDAO mapper = session.getMapper(CountryMapper.class);
             mapper.delete(id);
             session.commit();
         }
