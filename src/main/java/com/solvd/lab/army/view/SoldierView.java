@@ -22,22 +22,7 @@ public class SoldierView {
         System.out.println("Address: " + soldier.getAddress());
         System.out.println();
     }
-
-    public void displayAllSoldiersInfo(List<Soldier> soldiers) {
-        System.out.println("Soldiers:");
-        for (Soldier soldier : soldiers) {
-            displaySoldierInfo(soldier);
-        }
-    }
-
-    public static void main(String[] args) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
-        SoldierDAOImpl soldierDAO = new SoldierDAOImpl();
-        SoldierView soldierView = new SoldierView();
-        SoldierController soldierController = new SoldierController(soldierDAO, soldierView);
-
-        soldierController.displayAllSoldiers();
-
-        long soldierId = 5;
-        soldierController.displaySoldierById(soldierId);
+    public void displayErrorMessage(String message) {
+        System.out.println("Error: " + message);
     }
 }

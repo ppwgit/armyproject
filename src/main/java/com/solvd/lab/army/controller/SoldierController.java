@@ -10,25 +10,37 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SoldierController {
-    private SoldierDAOImpl soldierDAO;
     private SoldierView soldierView;
+    private ISoldierDAO soldierDAO;
 
-    public SoldierController(SoldierDAOImpl soldierDAO, SoldierView soldierView) {
-        this.soldierDAO = soldierDAO;
-        this.soldierView = soldierView;
+    public SoldierController() {
+        soldierView = new SoldierView();
+        soldierDAO = new SoldierDAOImpl();
     }
 
-    public void displayAllSoldiers() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void getAllSoldiers() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         List<Soldier> soldiers = soldierDAO.getAll();
-        soldierView.displayAllSoldiersInfo(soldiers);
+        if (soldiers.isEmpty()) {
+            soldierView.displayErrorMessage("No soldiers found.");
+        } else {
+            for (Soldier soldier : soldiers) {
+                soldierView.displaySoldierInfo(soldier);
+            }
+        }
     }
 
-    public void displaySoldierById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+    public void getSoldierById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         Soldier soldier = soldierDAO.getById(id);
-        if (soldier != null) {
-            soldierView.displaySoldierInfo(soldier);
+        if (soldier == null) {
+            soldierView.displayErrorMessage("Soldier with ID " + id + " not found.");
         } else {
-            System.out.println("Soldier not found with ID: " + id);
+            soldierView.displaySoldierInfo(soldier);
         }
+    }
+
+    public static void main(String[] args) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
+        SoldierController soldierController = new SoldierController();
+        soldierController.getAllSoldiers();
+        soldierController.getSoldierById(5);
     }
 }
