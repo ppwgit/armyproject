@@ -12,17 +12,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SoldierView {
-    public void displaySoldierInfo(Soldier soldier) {
+    public void displaySoldierDetails(Soldier soldier) {
         System.out.println("Soldier Details:");
         System.out.println("ID: " + soldier.getId());
-        System.out.println("Name: " + soldier.getFirstName() + " " + soldier.getLastName());
-        System.out.println("Email: " + soldier.getEmail());
-        System.out.println("Date of Birth: " + soldier.getDateOfBirth());
+        System.out.println("First Name: " + soldier.getFirstName());
+        System.out.println("Last Name: " + soldier.getLastName());
         System.out.println("Gender: " + soldier.getGender());
+        System.out.println("Contact Number: " + soldier.getContactNumber());
+        System.out.println("Emergency Number: " + soldier.getEmergencyNumber());
+        System.out.println("Email: " + soldier.getEmail());
         System.out.println("Address: " + soldier.getAddress());
-        System.out.println();
-    }
-    public void displayErrorMessage(String message) {
-        System.out.println("Error: " + message);
-    }
+         }
 }

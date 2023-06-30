@@ -7,40 +7,34 @@ import com.solvd.lab.army.view.SoldierView;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class SoldierController {
-    private SoldierView soldierView;
-    private ISoldierDAO soldierDAO;
+    private SoldierView view;
+    private Soldier model;
 
-    public SoldierController() {
-        soldierView = new SoldierView();
-        soldierDAO = new SoldierDAOImpl();
+
+    public SoldierController(Soldier model, SoldierView view) {
+        this.model = model;
+        this.view = view;
     }
 
-    public void getAllSoldiers() throws SQLException, IOException, InterruptedException, ClassNotFoundException {
-        List<Soldier> soldiers = soldierDAO.getAll();
-        if (soldiers.isEmpty()) {
-            soldierView.displayErrorMessage("No soldiers found.");
-        } else {
-            for (Soldier soldier : soldiers) {
-                soldierView.displaySoldierInfo(soldier);
-            }
-        }
+    public void setSoldierDetails(
+            long id, String firstName, String lastName, String gender,
+            String contactNumber, String emergencyNumber, String email, String address
+    ) {
+        model.setId(id);
+        model.setFirstName(firstName);
+        model.setLastName(lastName);
+        model.setGender(gender);
+        model.setContactNumber(contactNumber);
+        model.setEmergencyNumber(emergencyNumber);
+        model.setEmail(email);
+        model.setAddress(address);
     }
 
-    public void getSoldierById(long id) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
-        Soldier soldier = soldierDAO.getById(id);
-        if (soldier == null) {
-            soldierView.displayErrorMessage("Soldier with ID " + id + " not found.");
-        } else {
-            soldierView.displaySoldierInfo(soldier);
-        }
-    }
-
-    public static void main(String[] args) throws SQLException, IOException, InterruptedException, ClassNotFoundException {
-        SoldierController soldierController = new SoldierController();
-        soldierController.getAllSoldiers();
-        soldierController.getSoldierById(5);
+    public void updateView() {
+        view.displaySoldierDetails(model);
     }
 }

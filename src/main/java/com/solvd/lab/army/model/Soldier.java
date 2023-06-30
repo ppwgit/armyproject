@@ -160,6 +160,12 @@ public class Soldier {
         this.base = base;
 
     }
+
+    public Soldier(Long id, long rankId) {
+        this.id = id;
+        this.rankId = rankId;
+    }
+
     public Long getId() {
         return id;
     }
